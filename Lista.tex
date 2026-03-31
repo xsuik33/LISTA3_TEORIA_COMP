@@ -1,0 +1,2378 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noquoting]{babel} 
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{graphicx} 
+\usetikzlibrary{automata, positioning, arrows.meta, babel} 
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{geometry}
+\geometry{letterpaper, margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usetikzlibrary{automata, positioning, arrows, babel}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{40pt}
+\lhead{\textbf{Grupo: 4CV4}}
+\rhead{
+  \footnotesize
+  \begin{tabular}{r | l}
+    Gonzalez Ortiz Iker Saul & 2025630079 \\
+  \end{tabular}
+}
+\begin{document}
+
+\section*{Ejercicio 151}
+
+\textbf{Instrucciones:} En los problemas 151-155, debe hallar el diagrama de transiciones del autómata definido en cada tabla y simplificarlo eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{Tabla de transiciones:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $C$ & $E$ \\
+\hline
+$B$ & $F$ & $E$ \\
+\hline
+$*C$ & $A$ & $G$ \\
+\hline
+$D$ & $C$ & $E$ \\
+\hline
+$*E$ & $I$ & $B$ \\
+\hline
+$*F$ & $D$ & $H$ \\
+\hline
+$G$ & $F$ & $I$ \\
+\hline
+$H$ & $C$ & $J$ \\
+\hline
+$I$ & $J$ & $E$ \\
+\hline
+$J$ & $I$ & $E$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Procedimiento y Razonamiento (Simplificación):} \\
+Para simplificar el autómata, se realiza un recorrido de alcanzabilidad partiendo del estado inicial $A$ para verificar a qué estados se puede llegar mediante cualquier secuencia de entradas:
+\begin{itemize}
+    \item \textbf{Paso 0:} Comenzamos en el estado inicial $\rightarrow$ $\{A\}$.
+    \item \textbf{Paso 1:} Transiciones desde $A$ $\rightarrow$ $\{A, C, E\}$.
+    \item \textbf{Paso 2:} Transiciones descubiertas desde $C$ y $E$ $\rightarrow$ $\{A, C, E, G, I, B\}$.
+    \item \textbf{Paso 3:} Transiciones descubiertas desde $G$, $I$ y $B$ $\rightarrow$ $\{A, C, E, G, I, B, F, J\}$.
+    \item \textbf{Paso 4:} Transiciones descubiertas desde $F$ y $J$ $\rightarrow$ $\{A, C, E, G, I, B, F, J, D, H\}$.
+\end{itemize}
+Se verifica que todos los estados (desde $A$ hasta $J$) son alcanzables desde el estado inicial $A$. Por lo tanto, \textbf{no hay estados inaccesibles} que eliminar, y el autómata original ya está en su forma simplificada bajo este criterio.
+
+\vspace{0.5cm}
+
+\textbf{Diagrama de Transiciones:}
+
+\begin{center}
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=2.8cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos 
+    \node[state, initial, initial text={}] (A) {$A$};
+    \node[state, accepting, right=of A] (C) {$C$};
+    \node[state, accepting, below=of A] (E) {$E$};
+    \node[state, right=of C] (G) {$G$};
+    \node[state, below=of E] (I) {$I$};
+    \node[state, right=of E] (B) {$B$};
+    \node[state, accepting, right=of G] (F) {$F$};
+    \node[state, right=of I] (J) {$J$};
+    \node[state, below=of F] (D) {$D$};
+    \node[state, right=of D] (H) {$H$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node {0} (C)
+        edge node [swap] {1} (E)
+    (B) edge node [swap] {0} (F)
+        edge node {1} (E)
+    (C) edge [bend left] node {0} (A)
+        edge node {1} (G)
+    (D) edge [bend left=45] node {0} (C)
+        edge node [swap] {1} (E)
+    (E) edge node [swap] {0} (I)
+        edge node {1} (B)
+    (F) edge node {0} (D)
+        edge node {1} (H)
+    (G) edge node {0} (F)
+        edge node [pos=0.7] {1} (I)
+    (H) edge [bend right=60] node [swap] {0} (C)
+        edge node {1} (J)
+    (I) edge [bend left] node {0} (J)
+        edge [bend left=45] node {1} (E)
+    (J) edge [bend left] node {0} (I)
+        edge node [pos=0.2] {1} (E);
+
+\end{tikzpicture}
+} 
+\end{center}
+
+\section*{Ejercicio 152}
+
+\textbf{Instrucciones:} En los problemas 151-155, debe hallar el diagrama de transiciones del autómata definido en cada tabla y simplificarlo eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{Tabla de transiciones:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} & \textbf{2} \\
+\hline
+$\rightarrow A$ & $C$ & $E$ & $B$ \\
+\hline
+$B$ & $D$ & $E$ & $B$ \\
+\hline
+$C$ & $A$ & $D$ & $F$ \\
+\hline
+$*D$ & $F$ & $B$ & $C$ \\
+\hline
+$*E$ & $F$ & $B$ & $A$ \\
+\hline
+$*F$ & $D$ & $B$ & $C$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Procedimiento y Razonamiento (Simplificación):} \\
+Para simplificar el autómata, realizamos un recorrido de alcanzabilidad partiendo del estado inicial $A$:
+\begin{itemize}
+    \item \textbf{Paso 0:} Comenzamos en el estado inicial $\rightarrow$ $\{A\}$.
+    \item \textbf{Paso 1:} Transiciones desde $A$ evaluando entradas 0, 1 y 2 $\rightarrow$ $\{A, C, E, B\}$.
+    \item \textbf{Paso 2:} Transiciones descubiertas desde $C$, $E$ y $B$. Al evaluar $C$ llegamos a $D$ y $F$. Conjunto total $\rightarrow$ $\{A, B, C, D, E, F\}$.
+\end{itemize}
+Se verifica que todos los estados del autómata son alcanzables desde el estado inicial $A$. Por lo tanto, \textbf{no hay estados inaccesibles} que eliminar, y el autómata de la tabla es el definitivo.
+
+\vspace{0.5cm}
+
+\textbf{Diagrama de Transiciones:}
+
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=3.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (A) {$A$};
+    \node[state, right=of A] (C) {$C$};
+    \node[state, accepting, below=of A] (E) {$E$};
+    \node[state, right=of E] (B) {$B$};
+    \node[state, accepting, right=of C] (D) {$D$};
+    \node[state, accepting, right=of B] (F) {$F$};
+
+    % Transiciones
+    \path[->]
+    % Desde A
+    (A) edge [bend left=20] node {0} (C)
+        edge [bend left=20] node {1} (E)
+        edge node [pos=0.7] {2} (B)
+    % Desde B
+    (B) edge node [swap] {0} (D)
+        edge [bend left=20] node {1} (E)
+        edge [loop below] node {2} (B)
+    % Desde C
+    (C) edge [bend left=20] node {0} (A)
+        edge [bend left=20] node {1} (D)
+        edge node [pos=0.7] {2} (F)
+    % Desde D
+    (D) edge [bend left=20] node {0} (F)
+        edge [bend left=20] node {1} (B)
+        edge [bend left=20] node {2} (C)
+    % Desde E
+    (E) edge [bend right=40] node [swap] {0} (F)
+        edge [bend left=20] node {1} (B)
+        edge [bend left=20] node {2} (A)
+    % Desde F
+    (F) edge [bend left=20] node {0} (D)
+        edge node {1} (B)
+        edge [bend right=40] node [swap] {2} (C);
+\end{tikzpicture}
+}
+\end{center}
+
+\section*{Ejercicio 153}
+
+\textbf{Instrucciones:} En los problemas 151-155, debe hallar el diagrama de transiciones del autómata definido en cada tabla y simplificarlo eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{Tabla de transiciones:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $B$ & $C$ \\
+\hline
+$B$ & $D$ & $E$ \\
+\hline
+$C$ & $F$ & $G$ \\
+\hline
+$*D$ & $D$ & $E$ \\
+\hline
+$E$ & $F$ & $G$ \\
+\hline
+$*F$ & $E$ & $D$ \\
+\hline
+$*G$ & $F$ & $G$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Procedimiento y Razonamiento (Simplificación):} \\
+Realizamos un recorrido de alcanzabilidad partiendo del estado inicial $A$ para verificar qué estados son accesibles a través de las entradas dadas:
+\begin{itemize}
+    \item \textbf{Paso 0:} Comenzamos en el estado inicial $\rightarrow \{A\}$.
+    \item \textbf{Paso 1:} Evaluamos las transiciones desde $A$ con las entradas 0 y 1 $\rightarrow \{A, B, C\}$.
+    \item \textbf{Paso 2:} Evaluamos las transiciones descubiertas desde $B$ (que lleva a $D, E$) y desde $C$ (que lleva a $F, G$) $\rightarrow \{A, B, C, D, E, F, G\}$.
+\end{itemize}
+Dado que en el paso 2 ya hemos descubierto todos los estados listados en la tabla original, confirmamos que \textbf{no hay estados inaccesibles}. El autómata ya se encuentra simplificado bajo este criterio y ningún estado debe ser eliminado.
+
+\vspace{0.5cm}
+
+\textbf{Diagrama de Transiciones:}
+
+\begin{center}
+\resizebox{0.8\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos con coordenadas explícitas para evitar sobreposición
+    \node[state, initial, initial text={}] (A) at (0,0) {$A$};
+    \node[state] (B) at (-3,-3) {$B$};
+    \node[state] (C) at (3,-3) {$C$};
+    \node[state, accepting] (D) at (-3,-6) {$D$};
+    \node[state] (E) at (0,-6) {$E$};
+    \node[state, accepting] (F) at (3,-6) {$F$};
+    \node[state, accepting] (G) at (6,-3) {$G$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node [swap] {0} (B)
+        edge node {1} (C)
+    (B) edge node [swap] {0} (D)
+        edge node {1} (E)
+    (C) edge node [swap] {0} (F)
+        edge node {1} (G)
+    (D) edge [loop left] node {0} (D)
+        edge [bend left=15] node {1} (E)
+    (E) edge node {0} (F)
+        edge node [pos=0.7] {1} (G)
+    (F) edge [bend left=20] node {0} (E)
+        edge [bend left=30] node {1} (D)
+    (G) edge node {0} (F)
+        edge [loop right] node {1} (G);
+
+\end{tikzpicture}
+}
+\end{center}
+
+\section*{Ejercicio 154}
+
+\textbf{Instrucciones:} En los problemas 151-155, debe hallar el diagrama de transiciones del autómata definido en cada tabla y simplificarlo eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{Tabla de transiciones original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $D$ & $K$ \\
+\hline
+$B$ & $H$ & $K$ \\
+\hline
+$C$ & $I$ & $E$ \\
+\hline
+$D$ & $C$ & $G$ \\
+\hline
+$E$ & $K$ & $I$ \\
+\hline
+$F$ & $B$ & $E$ \\
+\hline
+$*G$ & $C$ & $I$ \\
+\hline
+$*H$ & $C$ & $B$ \\
+\hline
+$I$ & $G$ & $K$ \\
+\hline
+$*J$ & $F$ & $B$ \\
+\hline
+$K$ & $C$ & $F$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Procedimiento y Razonamiento (Simplificación):} \\
+Para simplificar el autómata, realizamos el recorrido de alcanzabilidad desde el estado inicial $A$:
+\begin{itemize}
+    \item \textbf{Paso 0:} Estado inicial $\rightarrow \{A\}$.
+    \item \textbf{Paso 1:} Transiciones desde $A$ (0 a $D$, 1 a $K$) $\rightarrow \{A, D, K\}$.
+    \item \textbf{Paso 2:} Transiciones desde $D$ y $K$ $\rightarrow \{A, C, D, F, G, K\}$.
+    \item \textbf{Paso 3:} Transiciones desde $C, F, G$ $\rightarrow \{A, B, C, D, E, F, G, I, K\}$.
+    \item \textbf{Paso 4:} Transiciones desde $B, E, I$ $\rightarrow \{A, B, C, D, E, F, G, H, I, K\}$.
+    \item \textbf{Paso 5:} Evaluando las transiciones del estado descubierto $H$, vemos que dirige a $C$ y $B$, los cuales ya están en nuestro conjunto.
+\end{itemize}
+El recorrido de accesibilidad finaliza y obtenemos el conjunto de estados accesibles: $\{A, B, C, D, E, F, G, H, I, K\}$.
+Al observar la tabla original, notamos que a lo largo de todo el análisis, el estado $J$ nunca fue alcanzado. Por lo tanto, \textbf{el estado $J$ es inaccesible y se elimina} del autómata final simplificado.
+
+\vspace{0.5cm}
+
+\textbf{Diagrama de Transiciones Simplificado:}
+
+\begin{center}
+\resizebox{0.9\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, auto, every state/.style={thick, fill=gray!10}]
+    % Disposición circular para evitar que se crucen demasiadas líneas
+    \def\R{4.5cm}
+    \node[state, initial, initial text={}] (A) at (90:\R) {$A$};
+    \node[state] (K) at (54:\R) {$K$};
+    \node[state] (F) at (18:\R) {$F$};
+    \node[state] (B) at (-18:\R) {$B$};
+    \node[state, accepting] (H) at (-54:\R) {$H$};
+    \node[state] (C) at (-90:\R) {$C$};
+    \node[state] (I) at (-126:\R) {$I$};
+    \node[state, accepting] (G) at (-162:\R) {$G$};
+    \node[state] (D) at (162:\R) {$D$};
+    \node[state] (E) at (126:\R) {$E$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node [swap] {0} (D)
+        edge node {1} (K)
+    (B) edge node {0} (H)
+        edge [bend right=15] node [swap] {1} (K)
+    (C) edge node {0} (I)
+        edge node {1} (E)
+    (D) edge node {0} (C)
+        edge node [swap] {1} (G)
+    (E) edge node {0} (K)
+        edge [bend right=15] node [swap] {1} (I)
+    (F) edge node {0} (B)
+        edge node {1} (E)
+    (G) edge [bend right=15] node [swap] {0} (C)
+        edge [bend left=15] node {1} (I)
+    (H) edge node {0} (C)
+        edge [bend left=15] node {1} (B)
+    (I) edge node {0} (G)
+        edge node {1} (K)
+    (K) edge [bend left=15] node {0} (C)
+        edge [bend left=15] node {1} (F);
+\end{tikzpicture}
+}
+\end{center}
+
+\section*{Ejercicio 155}
+
+\textbf{Instrucciones:} En los problemas 151-155, debe hallar el diagrama de transiciones del autómata definido en cada tabla y simplificarlo eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{Tabla de transiciones original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $B$ & $C$ \\
+\hline
+$B$ & $D$ & $E$ \\
+\hline
+$C$ & $K$ & $G$ \\
+\hline
+$D$ & $H$ & $E$ \\
+\hline
+$E$ & $F$ & $D$ \\
+\hline
+$*F$ & $J$ & $G$ \\
+\hline
+$G$ & $E$ & $G$ \\
+\hline
+$H$ & $B$ & $K$ \\
+\hline
+$I$ & $C$ & $A$ \\
+\hline
+$J$ & $D$ & $G$ \\
+\hline
+$K$ & $F$ & $D$ \\
+\hline
+$L$ & $C$ & $J$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Procedimiento y Razonamiento (Simplificación):} \\
+Para simplificar el autómata, realizamos el recorrido de alcanzabilidad partiendo del estado inicial $A$:
+\begin{itemize}
+    \item \textbf{Paso 0:} Estado inicial $\rightarrow \{A\}$.
+    \item \textbf{Paso 1:} Transiciones desde $A$ (0 a $B$, 1 a $C$) $\rightarrow \{A, B, C\}$.
+    \item \textbf{Paso 2:} Transiciones desde $B$ y $C$ $\rightarrow \{A, B, C, D, E, K, G\}$.
+    \item \textbf{Paso 3:} Transiciones desde $D, E, K, G$. (Nuevos estados descubiertos: $H$ desde $D$, $F$ desde $E$ y $K$). $\rightarrow \{A, B, C, D, E, F, G, H, K\}$.
+    \item \textbf{Paso 4:} Transiciones desde $H, F$. (Nuevo estado descubierto: $J$ desde $F$). $\rightarrow \{A, B, C, D, E, F, G, H, J, K\}$.
+    \item \textbf{Paso 5:} Transiciones desde $J$. ($J$ lleva a $D$ y $G$, que ya están en el conjunto). 
+\end{itemize}
+El recorrido finaliza sin descubrir nuevos estados. El conjunto final de estados accesibles es: $\{A, B, C, D, E, F, G, H, J, K\}$.
+Al comparar esto con la tabla original, observamos que los estados $I$ y $L$ jamás fueron alcanzados desde $A$. Por lo tanto, \textbf{los estados $I$ y $L$ son inaccesibles y se eliminan} para obtener el autómata simplificado.
+
+\vspace{0.5cm}
+
+\textbf{Diagrama de Transiciones Simplificado:}
+
+\begin{center}
+\resizebox{0.95\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, auto, every state/.style={thick, fill=gray!10}]
+    % Disposición circular (10 nodos)
+    \def\R{4.5cm}
+    \node[state, initial, initial text={}] (A) at (90:\R) {$A$};
+    \node[state] (B) at (54:\R) {$B$};
+    \node[state] (C) at (18:\R) {$C$};
+    \node[state] (D) at (-18:\R) {$D$};
+    \node[state] (E) at (-54:\R) {$E$};
+    \node[state, accepting] (F) at (-90:\R) {$F$};
+    \node[state] (G) at (-126:\R) {$G$};
+    \node[state] (H) at (-162:\R) {$H$};
+    \node[state] (J) at (162:\R) {$J$};
+    \node[state] (K) at (126:\R) {$K$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node {0} (B)
+        edge [bend left=15] node {1} (C)
+    (B) edge [bend left=15] node {0} (D)
+        edge node {1} (E)
+    (C) edge node {0} (K)
+        edge [bend left=20] node {1} (G)
+    (D) edge [bend left=15] node {0} (H)
+        edge [bend left=10] node {1} (E)
+    (E) edge node {0} (F)
+        edge [bend left=10] node {1} (D)
+    (F) edge [bend left=15] node {0} (J)
+        edge node {1} (G)
+    (G) edge [bend right=15] node [swap] {0} (E)
+        edge [loop left] node {1} (G)
+    (H) edge node {0} (B)
+        edge [bend left=15] node {1} (K)
+    (J) edge node {0} (D)
+        edge node {1} (G)
+    (K) edge [bend right=15] node [swap] {0} (F)
+        edge node {1} (D);
+
+\end{tikzpicture}
+}
+\end{center}
+
+\section*{Ejercicio 156}
+
+\textbf{Instrucciones:} En los problemas 156-157, debe hallar la tabla de transiciones del autómata que se muestra y simplificarlo encontrando una partición, eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{1. Tabla de transiciones original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $B$ & $C$ \\
+\hline
+$B$ & $C$ & $E$ \\
+\hline
+$C$ & $D$ & $C$ \\
+\hline
+$D$ & $C$ & $E$ \\
+\hline
+$*E$ & $B$ & $E$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{2. Procedimiento y Razonamiento (Simplificación por Partición):}
+
+\textbf{Paso 1: Eliminación de estados inaccesibles.} \\
+Partiendo del estado inicial $A$, verificamos la accesibilidad:
+\begin{itemize}
+    \item $A$ es accesible.
+    \item Desde $A$ llegamos a $B$ y $C$.
+    \item Desde $B$ llegamos a $E$.
+    \item Desde $C$ llegamos a $D$.
+\end{itemize}
+Todos los estados $\{A, B, C, D, E\}$ son accesibles. No se elimina ninguno en este paso.
+
+\vspace{0.3cm}
+
+\textbf{Paso 2: Método de particiones (Minimización).} \\
+Separamos los estados en dos grupos iniciales ($P_0$): estados de no aceptación y estados de aceptación.
+\begin{itemize}
+    \item $P_0 = \{ \{A, B, C, D\}, \{E\} \}$
+\end{itemize}
+
+\textbf{Iteración 1:} Analizamos el grupo $\{A, B, C, D\}$ para ver si sus transiciones apuntan al mismo bloque en $P_0$:
+\begin{itemize}
+    \item Transiciones con 0: $A \rightarrow B$ (no final), $B \rightarrow C$ (no final), $C \rightarrow D$ (no final), $D \rightarrow C$ (no final).
+    \item Transiciones con 1: $A \rightarrow C$ (no final), $B \rightarrow E$ (final), $C \rightarrow C$ (no final), $D \rightarrow E$ (final).
+\end{itemize}
+Observamos que $A$ y $C$ van a estados no finales tanto con 0 como con 1. Por otro lado, $B$ y $D$ van a un estado final ($E$) cuando leen un 1. Por lo tanto, el grupo se divide:
+\begin{itemize}
+    \item $P_1 = \{ \{A, C\}, \{B, D\}, \{E\} \}$
+\end{itemize}
+
+\textbf{Iteración 2:} Analizamos los nuevos grupos en $P_1$:
+\begin{itemize}
+    \item Para $\{A, C\}$: 
+    \begin{itemize}
+        \item Con 0: $A \rightarrow B$ y $C \rightarrow D$. Ambos destinos pertenecen al grupo $\{B, D\}$.
+        \item Con 1: $A \rightarrow C$ y $C \rightarrow C$. Ambos destinos pertenecen al grupo $\{A, C\}$.
+    \end{itemize}
+    Tienen el mismo comportamiento, por lo que $\{A, C\}$ no se divide.
+    
+    \item Para $\{B, D\}$:
+    \begin{itemize}
+        \item Con 0: $B \rightarrow C$ y $D \rightarrow C$. Ambos destinos están en $\{A, C\}$.
+        \item Con 1: $B \rightarrow E$ y $D \rightarrow E$. Ambos destinos están en $\{E\}$.
+    \end{itemize}
+    Tienen el mismo comportamiento, por lo que $\{B, D\}$ no se divide.
+\end{itemize}
+Como $P_2 = P_1$, el algoritmo termina. Los estados equivalentes se fusionan: formamos el estado $AC$ (inicial) y el estado $BD$. El estado $E$ se mantiene igual (final).
+
+\vspace{0.5cm}
+
+\textbf{3. Tabla de transiciones del autómata simplificado:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow AC$ & $BD$ & $AC$ \\
+\hline
+$BD$ & $AC$ & $E$ \\
+\hline
+$*E$ & $BD$ & $E$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Diagrama de Transiciones Minimizado:}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=3.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (AC) {$AC$};
+    \node[state, right=of AC] (BD) {$BD$};
+    \node[state, accepting, right=of BD] (E) {$E$};
+
+    % Transiciones
+    \path[->]
+    (AC) edge [loop above] node {1} (AC)
+         edge [bend left=20] node {0} (BD)
+    (BD) edge [bend left=20] node {0} (AC)
+         edge [bend left=20] node {1} (E)
+    (E)  edge [loop above] node {1} (E)
+         edge [bend left=20] node {0} (BD);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Ejercicio 157}
+
+\textbf{Instrucciones:} En los problemas 156-157, debe hallar la tabla de transiciones del autómata que se muestra y simplificarlo encontrando una partición, eliminando los estados que no son accesibles.
+
+\vspace{0.5cm}
+
+\textbf{1. Tabla de transiciones original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $B$ & $F$ \\
+\hline
+$B$ & $C$ & $F$ \\
+\hline
+$C$ & $D$ & $E$ \\
+\hline
+$D$ & $B$ & $E$ \\
+\hline
+$E$ & $F$ & $C$ \\
+\hline
+$*F$ & $F$ & $F$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{2. Procedimiento y Razonamiento (Simplificación por Partición):}
+
+\textbf{Paso 1: Eliminación de estados inaccesibles.} \\
+Partiendo del estado inicial $A$, realizamos la búsqueda de accesibilidad:
+\begin{itemize}
+    \item Desde $A$ accedemos a $B$ y $F$.
+    \item Desde $B$ accedemos a $C$.
+    \item Desde $C$ accedemos a $D$ y $E$.
+\end{itemize}
+Con esto verificamos que el conjunto completo de estados $\{A, B, C, D, E, F\}$ es accesible. No hay estados inaccesibles por eliminar.
+
+\vspace{0.3cm}
+
+\textbf{Paso 2: Método de particiones (Minimización).} \\
+Separamos los estados en dos bloques iniciales ($P_0$): estados no finales y finales.
+\begin{itemize}
+    \item $P_0 = \{ \{A, B, C, D, E\}, \{F\} \}$
+\end{itemize}
+
+\textbf{Iteración 1:} Analizamos el grupo $\{A, B, C, D, E\}$ en base a sus transiciones con 0 y 1 hacia los bloques de $P_0$:
+\begin{itemize}
+    \item $A \rightarrow (B, F)$ \textit{(Va a un no final con 0, a un final con 1)}
+    \item $B \rightarrow (C, F)$ \textit{(Va a un no final con 0, a un final con 1)}
+    \item $C \rightarrow (D, E)$ \textit{(Va a no finales con ambas entradas)}
+    \item $D \rightarrow (B, E)$ \textit{(Va a no finales con ambas entradas)}
+    \item $E \rightarrow (F, C)$ \textit{(Va a un final con 0, a un no final con 1)}
+\end{itemize}
+Agrupando los que tienen comportamientos idénticos hacia los bloques de $P_0$, la partición se divide en:
+\begin{itemize}
+    \item $P_1 = \{ \{A, B\}, \{C, D\}, \{E\}, \{F\} \}$
+\end{itemize}
+
+\textbf{Iteración 2:} Analizamos los nuevos grupos en $P_1$:
+\begin{itemize}
+    \item Grupo $\{A, B\}$: Con la entrada 0, $A \rightarrow B$ (que está en el bloque $\{A,B\}$) mientras que $B \rightarrow C$ (que está en el bloque $\{C,D\}$). Al dirigirse a bloques distintos con la misma entrada, se separan $\rightarrow \{A\}, \{B\}$.
+    \item Grupo $\{C, D\}$: Con la entrada 0, $C \rightarrow D$ (que está en el bloque $\{C,D\}$) mientras que $D \rightarrow B$ (que está en el bloque $\{A,B\}$). Al dirigirse a bloques distintos, se separan $\rightarrow \{C\}, \{D\}$.
+\end{itemize}
+\textbf{Conclusión:} Todos los estados terminan en su propio bloque $P_2 = \{ \{A\}, \{B\}, \{C\}, \{D\}, \{E\}, \{F\} \}$. Esto significa que \textbf{no hay estados equivalentes}. El autómata original ya es el mínimo posible.
+
+\vspace{0.5cm}
+
+\textbf{3. Diagrama de Transiciones (Idéntico al original):}
+
+\begin{center}
+\resizebox{0.9\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=3cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (A) {$A$};
+    \node[state, right=of A] (B) {$B$};
+    \node[state, right=of B] (C) {$C$};
+    \node[state, right=of C] (D) {$D$};
+    \node[state, accepting, below=of B] (F) {$F$};
+    \node[state, below=of C] (E) {$E$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node {0} (B)
+        edge [bend right=20] node [swap] {1} (F)
+    (B) edge node {0} (C)
+        edge node {1} (F)
+    (C) edge node {0} (D)
+        edge node {1} (E)
+    (D) edge [bend right=45] node [swap] {0} (B)
+        edge node {1} (E)
+    (E) edge node {0} (F)
+        edge [bend right=20] node [swap] {1} (C)
+    (F) edge [loop below] node {0, 1} (F);
+
+\end{tikzpicture}
+}
+\end{center}
+
+\section*{Ejercicio 158}
+
+\textbf{Instrucciones:} En los problemas 158-161, debe describir lo que hacen los autómatas finitos no deterministas definidos en cada figura, donde el alfabeto es $\Sigma=\{0,1\}$.
+
+\vspace{0.5cm}
+
+\textbf{1. Procedimiento y Razonamiento:} \\
+Al observar el diagrama del autómata, trazamos los posibles caminos desde el estado inicial ($q1$) hasta los estados de aceptación ($q3$). 
+\begin{itemize}
+    \item Para salir del estado inicial $q1$, la única transición posible es leyendo el símbolo $0$, lo que nos lleva al estado $q2$.
+    \item Una vez en $q2$, la única transición definida es leyendo el símbolo $1$, lo que nos lleva al estado $q3$.
+    \item El estado $q3$ es de aceptación y no tiene transiciones salientes ni bucles.
+\end{itemize}
+Dado que no hay bucles (loops) ni caminos alternativos, este autómata no acepta cadenas de longitud distinta a 2, ni combinaciones diferentes. El único camino válido requiere leer estrictamente un $0$ seguido de un $1$.
+
+\vspace{0.3cm}
+\textbf{Conclusión:} El autómata acepta única y exclusivamente la cadena $01$. Su lenguaje es finito y se define como $L = \{01\}$.
+
+\vspace{0.5cm}
+
+\textbf{2. Diagrama de Transiciones (AFN):}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=3cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (q1) {$q1$};
+    \node[state, right=of q1] (q2) {$q2$};
+    \node[state, accepting, right=of q2] (q3) {$q3$};
+
+    % Transiciones
+    \path[->]
+    (q1) edge node {0} (q2)
+    (q2) edge node {1} (q3);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Ejercicio 159}
+
+\textbf{Instrucciones:} En los problemas 158-161, debe describir lo que hacen los autómatas finitos no deterministas definidos en cada tabla, donde el alfabeto es $\Sigma=\{0,1\}$.
+
+\vspace{0.5cm}
+
+\textbf{1. Procedimiento y Razonamiento:} \\
+Analizamos los caminos posibles desde el estado inicial ($q1$) hacia el estado de aceptación ($q3$):
+\begin{itemize}
+    \item En el estado inicial $q1$, existe un bucle (loop) con la entrada $1$. Esto significa que el autómata puede leer cualquier cantidad de unos consecutivos (incluso ninguno) y permanecer en el mismo estado $q1$.
+    \item Para avanzar hacia el estado de aceptación, obligatoriamente debe leer un $0$, transitando al estado $q2$.
+    \item Estando en $q2$, la única forma de alcanzar el estado final $q3$ es leyendo un $1$.
+    \item Una vez en $q3$, el autómata acepta la cadena, ya que no hay más transiciones definidas para seguir leyendo símbolos.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Conclusión:} El autómata acepta todas las cadenas formadas por cualquier número de unos (incluyendo la cadena vacía de unos), seguidos obligatoriamente de la terminación "01". La expresión regular que describe este lenguaje es $1^{*}01$.
+
+\vspace{0.5cm}
+
+\textbf{2. Diagrama de Transiciones (AFN):}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=3cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (q1) {$q1$};
+    \node[state, right=of q1] (q2) {$q2$};
+    \node[state, accepting, right=of q2] (q3) {$q3$};
+
+    % Transiciones
+    \path[->]
+    (q1) edge [loop above] node {1} (q1)
+         edge node {0} (q2)
+    (q2) edge node {1} (q3);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Ejercicio 160}
+
+\textbf{Instrucciones:} En los problemas 158-161, debe describir lo que hacen los autómatas finitos no deterministas definidos en cada tabla, donde el alfabeto es $\Sigma=\{0,1\}$.
+
+\vspace{0.5cm}
+
+\textbf{1. Procedimiento y Razonamiento:} \\
+Analizamos el flujo del autómata desde su estado inicial ($q1$) hacia el estado de aceptación ($q3$):
+\begin{itemize}
+    \item El autómata inicia en $q1$ y la única transición válida para avanzar es leer un $0$, llevándolo al estado $q2$.
+    \item Estando en $q2$, la única forma de continuar es leer un $1$, lo que permite transitar al estado final de aceptación $q3$.
+    \item Una vez que el autómata alcanza el estado $q3$, entra en un bucle o lazo para las entradas $0$ y $1$. Esto significa que, sin importar qué símbolos lea a continuación, permanecerá en el estado de aceptación.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Conclusión:} El autómata acepta todas las cadenas que comiencen estrictamente con el prefijo "01". Después de leer este prefijo, la cadena puede contener cualquier combinación de ceros y unos de cualquier longitud (o incluso terminar ahí mismo). La expresión regular que define este lenguaje es $01(0+1)^{*}$.
+
+\vspace{0.5cm}
+
+\textbf{2. Diagrama de Transiciones (AFN):}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=3cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (q1) {$q1$};
+    \node[state, right=of q1] (q2) {$q2$};
+    \node[state, accepting, right=of q2] (q3) {$q3$};
+
+    % Transiciones
+    \path[->]
+    (q1) edge node {0} (q2)
+    (q2) edge node {1} (q3)
+    (q3) edge [loop above] node {0,1} (q3);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Ejercicio 161}
+
+\textbf{Instrucciones:} En los problemas 158-161, debe describir lo que hacen los autómatas finitos no deterministas definidos en cada tabla, donde el alfabeto es $\Sigma=\{0,1\}$.
+
+\vspace{0.5cm}
+
+\textbf{1. Procedimiento y Razonamiento:} \\
+Analizamos los caminos posibles partiendo del estado inicial ($q1$):
+\begin{itemize}
+    \item El estado inicial $q1$ también es un estado de aceptación. Esto significa que, sin haber leído ningún símbolo, el autómata ya está en un estado válido. Por lo tanto, acepta la cadena vacía ($\lambda$).
+    \item Para salir de $q1$, la única transición definida es leyendo un $0$, lo que nos lleva a $q2$.
+    \item Desde $q2$, debemos leer obligatoriamente un $1$ para avanzar al estado $q3$.
+    \item Una vez en $q3$, la única forma de no quedar atrapados es leyendo un $0$, lo cual nos regresa al estado inicial y de aceptación $q1$.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Conclusión:} El ciclo completo para salir y regresar al estado de aceptación requiere leer exactamente la secuencia "010". Como el estado inicial es también de aceptación, el autómata acepta la cadena vacía y cualquier cadena que esté formada por repeticiones exactas y consecutivas del bloque "010". La expresión regular que describe este lenguaje es $(010)^{*}$.
+
+\vspace{0.5cm}
+
+\textbf{2. Diagrama de Transiciones (AFN):}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=3cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, accepting, initial text={}] (q1) {$q1$};
+    \node[state, right=of q1] (q2) {$q2$};
+    \node[state, right=of q2] (q3) {$q3$};
+
+    % Transiciones
+    \path[->]
+    (q1) edge node {0} (q2)
+    (q2) edge node {1} (q3)
+    (q3) edge [bend left=45] node {0} (q1);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Ejercicio 189}
+
+\textbf{Instrucciones:} Encuentre un autómata finito no determinista con lenguaje $\Sigma=\{0,1\}$ que identifique las palabras que contienen la cadena 00101 o la cadena 00110. Realice el diagrama de transiciones de la palabra 1001011.
+
+\vspace{0.5cm}
+
+\textbf{1. Procedimiento y Razonamiento (Diseño del AFN):} \\
+Para diseñar un AFN que acepte cualquier cadena que \textit{contenga} "00101" o "00110", aprovechamos el no determinismo:
+\begin{itemize}
+    \item \textbf{Estado inicial ($q_0$):} Tendrá un bucle para leer cualquier combinación de ceros y unos ($0,1$) mientras "espera" a que comience el patrón. Al mismo tiempo, si lee un $0$, puede "adivinar" que el patrón está comenzando y transitar al siguiente estado.
+    \item \textbf{Prefijo común:} Ambas subcadenas ("00101" y "00110") comparten el prefijo "001". Podemos diseñar un camino lineal único para este prefijo: $q_0 \xrightarrow{0} q_1 \xrightarrow{0} q_2 \xrightarrow{1} q_3$.
+    \item \textbf{Bifurcación:} Una vez en $q_3$ (habiendo leído "001"), el autómata se divide en dos ramas:
+    \begin{itemize}
+        \item Rama 1 (para completar "00101"): $q_3 \xrightarrow{0} q_4 \xrightarrow{1} q_6$.
+        \item Rama 2 (para completar "00110"): $q_3 \xrightarrow{1} q_5 \xrightarrow{0} q_6$.
+    \end{itemize}
+    \item \textbf{Estado de aceptación ($q_6$):} Una vez que se alcanza $q_6$, significa que se encontró alguna de las subcadenas. Como la condición es que la palabra la \textit{contenga}, agregamos un bucle final con $0,1$ para absorber cualquier símbolo restante.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{2. Diagrama del AFN:}
+
+\begin{center}
+\resizebox{0.9\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=2.2cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos del prefijo común
+    \node[state, initial, initial text={}] (q0) {$q_0$};
+    \node[state, right=of q0] (q1) {$q_1$};
+    \node[state, right=of q1] (q2) {$q_2$};
+    \node[state, right=of q2] (q3) {$q_3$};
+    
+    % Nodos de la bifurcación
+    \node[state, above right=1.5cm and 2cm of q3] (q4) {$q_4$};
+    \node[state, below right=1.5cm and 2cm of q3] (q5) {$q_5$};
+    
+    % Nodo de aceptación
+    \node[state, accepting, below right=1.5cm and 2cm of q4] (q6) {$q_6$};
+
+    % Transiciones
+    \path[->]
+    (q0) edge [loop above] node {0,1} (q0)
+         edge node {0} (q1)
+    (q1) edge node {0} (q2)
+    (q2) edge node {1} (q3)
+    (q3) edge node [above left] {0} (q4)
+         edge node [below left] {1} (q5)
+    (q4) edge node [above right] {1} (q6)
+    (q5) edge node [below right] {0} (q6)
+    (q6) edge [loop right] node {0,1} (q6);
+
+\end{tikzpicture}
+}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{3. Diagrama de transiciones de la palabra 1001011:} \\
+A continuación se muestra el camino de aceptación (traza) para la palabra \textbf{1001011}, demostrando cómo el autómata la procesa exitosamente al encontrar la subcadena "00101".
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=2cm, on grid, auto, every state/.style={thick, fill=blue!10, minimum size=0.8cm}]
+
+    \node[state] (s0) {$q_0$};
+    \node[state, right=of s0] (s1) {$q_0$};
+    \node[state, right=of s1] (s2) {$q_1$};
+    \node[state, right=of s2] (s3) {$q_2$};
+    \node[state, right=of s3] (s4) {$q_3$};
+    \node[state, right=of s4] (s5) {$q_4$};
+    \node[state, right=of s5] (s6) {$q_6$};
+    \node[state, accepting, right=of s6] (s7) {$q_6$};
+
+    \path[->]
+    (s0) edge node {1} (s1)
+    (s1) edge node {0} (s2)
+    (s2) edge node {0} (s3)
+    (s3) edge node {1} (s4)
+    (s4) edge node {0} (s5)
+    (s5) edge node {1} (s6)
+    (s6) edge node {1} (s7);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Ejercicio 190}
+
+\textbf{Instrucciones:} Encuentre un autómata finito no determinista con lenguaje $\Sigma=\{0,1\}$ que identifique las palabras que contienen la cadena 11010 y la cadena 10100. Realice el diagrama de transiciones de la palabra 01101010100. 
+
+\vspace{0.5cm}
+
+\textbf{1. Procedimiento y Razonamiento (Diseño del AFN):} \\
+El problema nos pide identificar cadenas que contengan \textbf{ambas} subcadenas ("11010" y "10100"). Al usar no determinismo, podemos plantear el AFN creando distintas "ramas" lógicas desde el estado inicial para cubrir los órdenes posibles en los que pueden aparecer estas subcadenas dentro de la palabra:
+\begin{itemize}
+    \item \textbf{Rama 1:} Aparece primero "11010", luego hay un espacio intermedio de cualquier longitud (bucle) y después aparece "10100".
+    \item \textbf{Rama 2:} Aparece primero "10100", luego hay un espacio intermedio (bucle) y después aparece "11010".
+    \item \textbf{Rama 3 (Superposición):} Las subcadenas se entrelazan. Si analizamos sus extremos, el final de "11010" (es decir, "10") coincide con el inicio de "10100". Esto genera la superposición perfecta "11010100", la cual contiene ambas cadenas simultáneamente en solo 8 caracteres.
+\end{itemize}
+Todas estas ramas parten de un estado inicial $q_0$ (con un bucle de $0,1$ para ignorar la basura al inicio) y convergen en un estado final de aceptación $q_f$ (con un bucle de $0,1$ para ignorar la basura al final).
+
+\vspace{0.5cm}
+
+\textbf{2. Diagrama del AFN:}
+
+\begin{center}
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, auto, every state/.style={thick, fill=gray!10, minimum size=0.6cm, inner sep=1pt}]
+
+    % Estado inicial
+    \node[state, initial, initial text={}] (q0) at (0,0) {$q_0$};
+    
+    % Rama 1: 11010 ... 10100
+    \node[state] (q1) at (1.5, 2.5) {$q_1$};
+    \node[state] (q2) at (2.8, 2.5) {$q_2$};
+    \node[state] (q3) at (4.1, 2.5) {$q_3$};
+    \node[state] (q4) at (5.4, 2.5) {$q_4$};
+    \node[state] (q5) at (6.7, 2.5) {$q_5$};
+    \node[state] (q6) at (8.0, 2.5) {$q_6$};
+    \node[state] (q7) at (9.3, 2.5) {$q_7$};
+    \node[state] (q8) at (10.6, 2.5) {$q_8$};
+    \node[state] (q9) at (11.9, 2.5) {$q_9$};
+    
+    % Rama 3: 11010100 (Superposición)
+    \node[state] (q21) at (1.5, 0) {$q_{21}$};
+    \node[state] (q22) at (2.8, 0) {$q_{22}$};
+    \node[state] (q23) at (4.1, 0) {$q_{23}$};
+    \node[state] (q24) at (5.4, 0) {$q_{24}$};
+    \node[state] (q25) at (6.7, 0) {$q_{25}$};
+    \node[state] (q26) at (8.0, 0) {$q_{26}$};
+    \node[state] (q27) at (9.3, 0) {$q_{27}$};
+    
+    % Rama 2: 10100 ... 11010
+    \node[state] (q11) at (1.5, -2.5) {$q_{11}$};
+    \node[state] (q12) at (2.8, -2.5) {$q_{12}$};
+    \node[state] (q13) at (4.1, -2.5) {$q_{13}$};
+    \node[state] (q14) at (5.4, -2.5) {$q_{14}$};
+    \node[state] (q15) at (6.7, -2.5) {$q_{15}$};
+    \node[state] (q16) at (8.0, -2.5) {$q_{16}$};
+    \node[state] (q17) at (9.3, -2.5) {$q_{17}$};
+    \node[state] (q18) at (10.6, -2.5) {$q_{18}$};
+    \node[state] (q19) at (11.9, -2.5) {$q_{19}$};
+    
+    % Estado final
+    \node[state, accepting] (q10) at (13.5, 0) {$q_f$};
+    
+    % Transiciones q0
+    \path[->] (q0) edge [loop above] node {0,1} (q0)
+                   edge [bend left=15] node {1} (q1)
+                   edge node {1} (q21)
+                   edge [bend right=15] node [swap] {1} (q11);
+                   
+    % Transiciones Rama 1
+    \path[->] (q1) edge node {1} (q2)
+              (q2) edge node {0} (q3)
+              (q3) edge node {1} (q4)
+              (q4) edge node {0} (q5)
+              (q5) edge [loop above] node {0,1} (q5)
+                   edge node {1} (q6)
+              (q6) edge node {0} (q7)
+              (q7) edge node {1} (q8)
+              (q8) edge node {0} (q9)
+              (q9) edge [bend left=15] node {0} (q10);
+              
+    % Transiciones Rama 2
+    \path[->] (q11) edge node {0} (q12)
+              (q12) edge node {1} (q13)
+              (q13) edge node {0} (q14)
+              (q14) edge node {0} (q15)
+              (q15) edge [loop below] node {0,1} (q15)
+                    edge node {1} (q16)
+              (q16) edge node {1} (q17)
+              (q17) edge node {0} (q18)
+              (q18) edge node {1} (q19)
+              (q19) edge [bend right=15] node [swap] {0} (q10);
+              
+    % Transiciones Rama 3
+    \path[->] (q21) edge node {1} (q22)
+              (q22) edge node {0} (q23)
+              (q23) edge node {1} (q24)
+              (q24) edge node {0} (q25)
+              (q25) edge node {1} (q26)
+              (q26) edge node {0} (q27)
+              (q27) edge node {0} (q10);
+              
+    % Bucle final
+    \path[->] (q10) edge [loop right] node {0,1} (q10);
+\end{tikzpicture}
+}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{3. Diagrama de transiciones de la palabra 01101010100:} \\
+Al analizar la cadena dada "01101010100", nos damos cuenta de que cumple con el escenario de la \textbf{Rama 1}: primero aparece de forma intacta "11010" y, justo a continuación, la cadena "10100". La transición se vería así:
+
+\begin{center}
+\resizebox{0.9\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=1.5cm, on grid, auto, every state/.style={thick, fill=blue!10, minimum size=0.7cm}]
+
+    \node[state] (s0) {$q_0$};
+    \node[state, right=of s0] (s1) {$q_0$};
+    \node[state, right=of s1] (s2) {$q_1$};
+    \node[state, right=of s2] (s3) {$q_2$};
+    \node[state, right=of s3] (s4) {$q_3$};
+    \node[state, right=of s4] (s5) {$q_4$};
+    \node[state, right=of s5] (s6) {$q_5$};
+    \node[state, right=of s6] (s7) {$q_6$};
+    \node[state, right=of s7] (s8) {$q_7$};
+    \node[state, right=of s8] (s9) {$q_8$};
+    \node[state, right=of s9] (s10) {$q_9$};
+    \node[state, accepting, right=of s10] (sf) {$q_f$};
+
+    \path[->]
+    (s0) edge node {0} (s1)
+    (s1) edge node {1} (s2)
+    (s2) edge node {1} (s3)
+    (s3) edge node {0} (s4)
+    (s4) edge node {1} (s5)
+    (s5) edge node {0} (s6)
+    (s6) edge node {1} (s7)
+    (s7) edge node {0} (s8)
+    (s8) edge node {1} (s9)
+    (s9) edge node {0} (s10)
+    (s10) edge node {0} (sf);
+
+\end{tikzpicture}
+}
+\end{center}
+
+\section*{Ejercicios 191 y 192}
+
+\textbf{Instrucciones (191):} En los problemas 191-194, considere el autómata finito no determinista definido en cada tabla. Encuentre un autómata finito determinista equivalente y realice las siguientes operaciones: a) Calcule $\delta(Z,\omega)$ en el AFN. b) Calcule $\delta_D(Z,\omega)$ en el AFD.
+
+\vspace{0.5cm}
+
+\textbf{1. Conversión de AFN a AFD (Construcción de Subconjuntos):} \\
+Partimos del estado inicial del AFN, que es $\{A\}$.
+\begin{itemize}
+    \item \textbf{Desde $\{A\}$:} 
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) = \{B\}$
+        \item Con 1: $\delta(A, 1) = \{B, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{B\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(B, 0) = \{A, B\}$
+        \item Con 1: $\delta(B, 1) = \emptyset$
+    \end{itemize}
+    \item \textbf{Desde $\{B, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(B, 0) \cup \delta(C, 0) = \{A, B\} \cup \{A, C\} = \{A, B, C\}$
+        \item Con 1: $\delta(B, 1) \cup \delta(C, 1) = \emptyset \cup \emptyset = \emptyset$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) = \{B\} \cup \{A, B\} = \{A, B\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) = \{B, C\} \cup \emptyset = \{B, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) \cup \delta(C, 0) = \{B\} \cup \{A, B\} \cup \{A, C\} = \{A, B, C\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) \cup \delta(C, 1) = \{B, C\} \cup \emptyset \cup \emptyset = \{B, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\emptyset$ (Estado Trampa):} Va a $\emptyset$ con 0 y 1.
+\end{itemize}
+Los estados finales del AFD son aquellos que contienen al estado final del AFN original ($C$). Por lo tanto, $\{B, C\}$ y $\{A, B, C\}$ son de aceptación.
+
+\vspace{0.5cm}
+
+\textbf{2. Operaciones solicitadas (Problema 192):}
+
+\textbf{a) $Z=\{A\}$, $\omega=0111$}
+\begin{itemize}
+    \item $\delta(\{A\}, 0) = \{B\}$
+    \item $\delta(\{B\}, 1) = \emptyset$
+    \item $\delta(\emptyset, 1) = \emptyset$
+    \item $\delta(\emptyset, 1) = \emptyset$
+    \item \textbf{Resultado:} $\delta(\{A\}, 0111) = \emptyset$
+\end{itemize}
+
+\textbf{b) $Z=\{B,C\}$, $\omega=010111$}
+\begin{itemize}
+    \item $\delta(\{B,C\}, 0) = \{A, B, C\}$
+    \item $\delta(\{A, B, C\}, 1) = \{B, C\}$
+    \item $\delta(\{B, C\}, 0) = \{A, B, C\}$
+    \item $\delta(\{A, B, C\}, 1) = \{B, C\}$
+    \item $\delta(\{B, C\}, 1) = \emptyset$
+    \item $\delta(\emptyset, 1) = \emptyset$
+    \item \textbf{Resultado:} $\delta(\{B,C\}, 010111) = \emptyset$
+\end{itemize}
+
+\textit{Nota: Los resultados de $\delta(Z, \omega)$ y $\delta_D(Z, \omega)$ son matemáticamente idénticos, ya que el AFD es solo la representación formal de los conjuntos de estados alcanzados en el AFN.}
+
+\vspace{0.5cm}
+
+\textbf{3. Diagrama del AFD equivalente:}
+
+\begin{center}
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=3.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (A) {$A$};
+    \node[state, right=of A] (B) {$B$};
+    \node[state, right=of B] (AB) {$AB$};
+    \node[state, accepting, below=of A] (BC) {$BC$};
+    \node[state, accepting, below=of B] (ABC) {$ABC$};
+    \node[state, below=of AB] (E) {$\emptyset$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node {0} (B)
+        edge node [swap] {1} (BC)
+    (B) edge node {0} (AB)
+        edge node [swap] {1} (E)
+    (AB) edge [loop above] node {0} (AB)
+         edge [bend left=15] node {1} (BC)
+    (BC) edge node [swap] {0} (ABC)
+         edge node [swap] {1} (E)
+    (ABC) edge [loop below] node {0} (ABC)
+          edge node {1} (BC)
+    (E) edge [loop below] node {0,1} (E);
+
+\end{tikzpicture}
+}
+\end{center}
+\section*{Ejercicio 193}
+
+\textbf{Instrucciones:} Considere el siguiente autómata no determinista. Encuentre un autómata finito determinista equivalente y realice las operaciones solicitadas.
+
+\vspace{0.5cm}
+
+\textbf{1. Tabla de transiciones del AFN original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $\{B, C\}$ & $\emptyset$ \\
+\hline
+$B$ & $\{A, D\}$ & $\{A, C\}$ \\
+\hline
+$C$ & $\{B, C, D\}$ & $\{C\}$ \\
+\hline
+$*D$ & $\{D\}$ & $\{C\}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{2. Conversión de AFN a AFD (Construcción de Subconjuntos):} \\
+Partimos del estado inicial del AFN, que es $\{A\}$.
+\begin{itemize}
+    \item \textbf{Desde $\{A\}$:} 
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) = \{B, C\}$
+        \item Con 1: $\delta(A, 1) = \emptyset$
+    \end{itemize}
+    \item \textbf{Desde $\{B, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(B, 0) \cup \delta(C, 0) = \{A, D\} \cup \{B, C, D\} = \{A, B, C, D\}$
+        \item Con 1: $\delta(B, 1) \cup \delta(C, 1) = \{A, C\} \cup \{C\} = \{A, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, C, D\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,0) \cup \delta(B,0) \cup \delta(C,0) \cup \delta(D,0) = \{A, B, C, D\}$
+        \item Con 1: $\delta(A,1) \cup \delta(B,1) \cup \delta(C,1) \cup \delta(D,1) = \emptyset \cup \{A, C\} \cup \{C\} \cup \{C\} = \{A, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(C, 0) = \{B, C\} \cup \{B, C, D\} = \{B, C, D\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(C, 1) = \emptyset \cup \{C\} = \{C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{B, C, D\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(B, 0) \cup \delta(C, 0) \cup \delta(D, 0) = \{A, D\} \cup \{B, C, D\} \cup \{D\} = \{A, B, C, D\}$
+        \item Con 1: $\delta(B, 1) \cup \delta(C, 1) \cup \delta(D, 1) = \{A, C\} \cup \{C\} \cup \{C\} = \{A, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(C, 0) = \{B, C, D\}$
+        \item Con 1: $\delta(C, 1) = \{C\}$
+    \end{itemize}
+    \item \textbf{Desde $\emptyset$ (Estado Trampa):} Va a $\emptyset$ con 0 y 1.
+\end{itemize}
+Los estados de aceptación del AFD son todos aquellos que contienen al estado final original ($D$). Por lo tanto, $\{A, B, C, D\}$ y $\{B, C, D\}$ son estados finales.
+
+\vspace{0.5cm}
+
+\textbf{3. Operaciones solicitadas:}
+
+\textbf{a) $Z=\{A\}$, $\omega=01101$}
+\begin{itemize}
+    \item $\delta(\{A\}, 0) = \{B, C\}$
+    \item $\delta(\{B, C\}, 1) = \{A, C\}$
+    \item $\delta(\{A, C\}, 1) = \{C\}$
+    \item $\delta(\{C\}, 0) = \{B, C, D\}$
+    \item $\delta(\{B, C, D\}, 1) = \{A, C\}$
+    \item \textbf{Resultado:} $\delta(\{A\}, 01101) = \{A, C\}$
+\end{itemize}
+
+\textbf{b) $Z=\{A,B\}$, $\omega=1101$}
+\begin{itemize}
+    \item $\delta(\{A, B\}, 1) = \delta(A, 1) \cup \delta(B, 1) = \emptyset \cup \{A, C\} = \{A, C\}$
+    \item $\delta(\{A, C\}, 1) = \{C\}$
+    \item $\delta(\{C\}, 0) = \{B, C, D\}$
+    \item $\delta(\{B, C, D\}, 1) = \{A, C\}$
+    \item \textbf{Resultado:} $\delta(\{A, B\}, 1101) = \{A, C\}$
+\end{itemize}
+
+\textbf{c) $Z=\{C\}$, $\omega=1101$}
+\begin{itemize}
+    \item $\delta(\{C\}, 1) = \{C\}$
+    \item $\delta(\{C\}, 1) = \{C\}$
+    \item $\delta(\{C\}, 0) = \{B, C, D\}$
+    \item $\delta(\{B, C, D\}, 1) = \{A, C\}$
+    \item \textbf{Resultado:} $\delta(\{C\}, 1101) = \{A, C\}$
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{4. Diagrama del AFD equivalente:}
+
+\begin{center}
+\resizebox{0.95\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=3.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (A) {$A$};
+    \node[state, right=of A] (BC) {$BC$};
+    \node[state, accepting, right=of BC] (ABCD) {$ABCD$};
+    \node[state, below=of BC] (AC) {$AC$};
+    \node[state, accepting, right=of AC] (BCD) {$BCD$};
+    \node[state, below=of AC] (C) {$C$};
+    \node[state, below=of A] (E) {$\emptyset$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node {0} (BC)
+        edge node [swap] {1} (E)
+    (BC) edge node {0} (ABCD)
+         edge node [swap] {1} (AC)
+    (ABCD) edge [loop right] node {0} (ABCD)
+           edge [bend right=15] node [swap] {1} (AC)
+    (AC) edge node [swap] {0} (BCD)
+         edge node {1} (C)
+    (BCD) edge node [swap] {0} (ABCD)
+          edge [bend left=15] node {1} (AC)
+    (C) edge [bend right=30] node [swap] {0} (BCD)
+        edge [loop below] node {1} (C)
+    (E) edge [loop below] node {0,1} (E);
+
+\end{tikzpicture}
+}
+\end{center}
+\section*{Ejercicio 194}
+
+\textbf{Instrucciones:} Considere el autómata finito no determinista definido en la tabla. Encuentre un autómata finito determinista equivalente y realice las operaciones solicitadas.
+
+\vspace{0.5cm}
+
+\textbf{1. Tabla de transiciones del AFN original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} & \textbf{2} \\
+\hline
+$\rightarrow A$ & $\{A, C\}$ & $\{A, B\}$ & $\{A\}$ \\
+\hline
+$B$ & $\emptyset$ & $\emptyset$ & $\emptyset$ \\
+\hline
+$*C$ & $\{A, B\}$ & $\{A, B, C, D\}$ & $\emptyset$ \\
+\hline
+$*D$ & $\{B\}$ & $\{A\}$ & $\emptyset$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{2. Conversión de AFN a AFD (Construcción de Subconjuntos):} \\
+Partimos del estado inicial del AFN, $\{A\}$.
+\begin{itemize}
+    \item \textbf{Desde $\{A\}$:} 
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) = \{A, C\}$
+        \item Con 1: $\delta(A, 1) = \{A, B\}$
+        \item Con 2: $\delta(A, 2) = \{A\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) = \{A, C\} \cup \emptyset = \{A, C\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) = \{A, B\} \cup \emptyset = \{A, B\}$
+        \item Con 2: $\delta(A, 2) \cup \delta(B, 2) = \{A\} \cup \emptyset = \{A\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(C, 0) = \{A, C\} \cup \{A, B\} = \{A, B, C\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(C, 1) = \{A, B\} \cup \{A, B, C, D\} = \{A, B, C, D\}$
+        \item Con 2: $\delta(A, 2) \cup \delta(C, 2) = \{A\} \cup \emptyset = \{A\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) \cup \delta(C, 0) = \{A, C\} \cup \emptyset \cup \{A, B\} = \{A, B, C\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) \cup \delta(C, 1) = \{A, B\} \cup \emptyset \cup \{A, B, C, D\} = \{A, B, C, D\}$
+        \item Con 2: $\delta(A, 2) \cup \delta(B, 2) \cup \delta(C, 2) = \{A\} \cup \emptyset \cup \emptyset = \{A\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, C, D\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,B,C,0) \cup \delta(D, 0) = \{A, B, C\} \cup \{B\} = \{A, B, C\}$
+        \item Con 1: $\delta(A,B,C,1) \cup \delta(D, 1) = \{A, B, C, D\} \cup \{A\} = \{A, B, C, D\}$
+        \item Con 2: $\delta(A,B,C,2) \cup \delta(D, 2) = \{A\} \cup \emptyset = \{A\}$
+    \end{itemize}
+\end{itemize}
+Los estados finales del AFD son aquellos que contienen al menos uno de los estados finales del AFN ($C$ o $D$). Por lo tanto, los estados de aceptación son $\{A, C\}$, $\{A, B, C\}$ y $\{A, B, C, D\}$.
+
+\vspace{0.5cm}
+
+\textbf{3. Operaciones solicitadas:}
+
+\textbf{a) $Z=\{A,C\}$, $\omega=0121$}
+\begin{itemize}
+    \item $\delta(\{A, C\}, 0) = \{A, B, C\}$
+    \item $\delta(\{A, B, C\}, 1) = \{A, B, C, D\}$
+    \item $\delta(\{A, B, C, D\}, 2) = \{A\}$
+    \item $\delta(\{A\}, 1) = \{A, B\}$
+    \item \textbf{Resultado:} $\delta(\{A, C\}, 0121) = \{A, B\}$
+\end{itemize}
+
+\textbf{b) $Z=\{B\}$, $\omega=20111$}
+\begin{itemize}
+    \item $\delta(\{B\}, 2) = \emptyset$
+    \item Cualquier entrada posterior desde $\emptyset$ resulta en $\emptyset$.
+    \item \textbf{Resultado:} $\delta(\{B\}, 20111) = \emptyset$
+\end{itemize}
+
+\textbf{c) $Z=\{C\}$, $\omega=02112$}
+\begin{itemize}
+    \item $\delta(\{C\}, 0) = \{A, B\}$
+    \item $\delta(\{A, B\}, 2) = \{A\}$
+    \item $\delta(\{A\}, 1) = \{A, B\}$
+    \item $\delta(\{A, B\}, 1) = \{A, B\}$
+    \item $\delta(\{A, B\}, 2) = \{A\}$
+    \item \textbf{Resultado:} $\delta(\{C\}, 02112) = \{A\}$
+\end{itemize}
+
+\textbf{d) $Z=\{A,B\}$, $\omega=0121$}
+\begin{itemize}
+    \item $\delta(\{A, B\}, 0) = \{A, C\}$
+    \item $\delta(\{A, C\}, 1) = \{A, B, C, D\}$
+    \item $\delta(\{A, B, C, D\}, 2) = \{A\}$
+    \item $\delta(\{A\}, 1) = \{A, B\}$
+    \item \textbf{Resultado:} $\delta(\{A, B\}, 0121) = \{A, B\}$
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{4. Diagrama del AFD equivalente:}
+
+\begin{center}
+\resizebox{0.95\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=4cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (A) {$A$};
+    \node[state, below=of A] (AB) {$AB$};
+    \node[state, accepting, right=of A] (AC) {$AC$};
+    \node[state, accepting, right=of AC] (ABC) {$ABC$};
+    \node[state, accepting, below=of ABC] (ABCD) {$ABCD$};
+
+    % Transiciones
+    \path[->]
+    (A) edge [loop above] node {2} (A)
+        edge [bend right=15] node [swap] {1} (AB)
+        edge node {0} (AC)
+        
+    (AB) edge [bend right=15] node [swap] {2} (A)
+         edge [loop below] node {1} (AB)
+         edge node [swap] {0} (AC)
+         
+    (AC) edge [bend right=30] node [above] {2} (A)
+         edge node {0} (ABC)
+         edge node [swap] {1} (ABCD)
+         
+    (ABC) edge [bend right=45] node [above] {2} (A)
+          edge [loop above] node {0} (ABC)
+          edge [bend right=15] node [swap] {1} (ABCD)
+          
+    (ABCD) edge [bend left=45] node [below] {2} (A)
+           edge [bend right=15] node [swap] {0} (ABC)
+           edge [loop below] node {1} (ABCD);
+
+\end{tikzpicture}
+}
+\end{center}
+\section*{Ejercicio 195}
+
+\textbf{Instrucciones:} Considere el autómata finito no determinista definido en la tabla. Encuentre un autómata finito determinista equivalente y realice las operaciones solicitadas.
+
+\vspace{0.5cm}
+
+\textbf{1. Tabla de transiciones del AFN original:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow A$ & $\{A, B\}$ & $\{A\}$ \\
+\hline
+$B$ & $\{A\}$ & $\{C\}$ \\
+\hline
+$*C$ & $\{A\}$ & $\{D\}$ \\
+\hline
+$D$ & $\{D\}$ & $\{E\}$ \\
+\hline
+$*E$ & $\{E\}$ & $\{C, D\}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{2. Conversión de AFN a AFD (Construcción de Subconjuntos):} \\
+Partimos del estado inicial del AFN, $\{A\}$, y calculamos las transiciones iterativamente:
+\begin{itemize}
+    \item \textbf{Desde $\{A\}$:} Con 0 $\rightarrow \{A, B\}$; Con 1 $\rightarrow \{A\}$
+    \item \textbf{Desde $\{A, B\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) = \{A, B\} \cup \{A\} = \{A, B\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) = \{A\} \cup \{C\} = \{A, C\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, C\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(C, 0) = \{A, B\} \cup \{A\} = \{A, B\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(C, 1) = \{A\} \cup \{D\} = \{A, D\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, D\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(D, 0) = \{A, B\} \cup \{D\} = \{A, B, D\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(D, 1) = \{A\} \cup \{E\} = \{A, E\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, D\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,B, 0) \cup \delta(D, 0) = \{A, B\} \cup \{D\} = \{A, B, D\}$
+        \item Con 1: $\delta(A,B, 1) \cup \delta(D, 1) = \{A, C\} \cup \{E\} = \{A, C, E\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, E\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(E, 0) = \{A, B\} \cup \{E\} = \{A, B, E\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(E, 1) = \{A\} \cup \{C, D\} = \{A, C, D\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, C, E\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,C, 0) \cup \delta(E, 0) = \{A, B\} \cup \{E\} = \{A, B, E\}$
+        \item Con 1: $\delta(A,C, 1) \cup \delta(E, 1) = \{A, D\} \cup \{C, D\} = \{A, C, D\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, E\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,B, 0) \cup \delta(E, 0) = \{A, B\} \cup \{E\} = \{A, B, E\}$
+        \item Con 1: $\delta(A,B, 1) \cup \delta(E, 1) = \{A, C\} \cup \{C, D\} = \{A, C, D\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, C, D\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,C, 0) \cup \delta(D, 0) = \{A, B\} \cup \{D\} = \{A, B, D\}$
+        \item Con 1: $\delta(A,C, 1) \cup \delta(D, 1) = \{A, D\} \cup \{E\} = \{A, D, E\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, D, E\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,D, 0) \cup \delta(E, 0) = \{A, B, D\} \cup \{E\} = \{A, B, D, E\}$
+        \item Con 1: $\delta(A,D, 1) \cup \delta(E, 1) = \{A, E\} \cup \{C, D\} = \{A, C, D, E\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, B, D, E\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,B,D, 0) \cup \delta(E, 0) = \{A, B, D\} \cup \{E\} = \{A, B, D, E\}$
+        \item Con 1: $\delta(A,B,D, 1) \cup \delta(E, 1) = \{A, C, E\} \cup \{C, D\} = \{A, C, D, E\}$
+    \end{itemize}
+    \item \textbf{Desde $\{A, C, D, E\}$:}
+    \begin{itemize}
+        \item Con 0: $\delta(A,C,D, 0) \cup \delta(E, 0) = \{A, B, D\} \cup \{E\} = \{A, B, D, E\}$
+        \item Con 1: $\delta(A,C,D, 1) \cup \delta(E, 1) = \{A, D, E\} \cup \{C, D\} = \{A, C, D, E\}$
+    \end{itemize}
+\end{itemize}
+Se han generado 12 estados. Los estados de aceptación del AFD son todos aquellos que contienen al menos a $C$ o a $E$.
+
+\vspace{0.5cm}
+
+\textbf{3. Operaciones solicitadas:}
+
+\textbf{a) $Z=\{A\}$, $\omega=10010$}
+\begin{itemize}
+    \item $\delta(\{A\}, 1) = \{A\}$
+    \item $\delta(\{A\}, 0) = \{A, B\}$
+    \item $\delta(\{A, B\}, 0) = \{A, B\}$
+    \item $\delta(\{A, B\}, 1) = \{A, C\}$
+    \item $\delta(\{A, C\}, 0) = \{A, B\}$
+    \item \textbf{Resultado:} $\delta(\{A\}, 10010) = \{A, B\}$
+\end{itemize}
+
+\textbf{b) $Z=\{A,D\}$, $\omega=0110$}
+\begin{itemize}
+    \item $\delta(\{A, D\}, 0) = \{A, B, D\}$
+    \item $\delta(\{A, B, D\}, 1) = \{A, C, E\}$
+    \item $\delta(\{A, C, E\}, 1) = \{A, C, D\}$
+    \item $\delta(\{A, C, D\}, 0) = \{A, B, D\}$
+    \item \textbf{Resultado:} $\delta(\{A, D\}, 0110) = \{A, B, D\}$
+\end{itemize}
+
+\textbf{c) $Z=\{B,E\}$, $\omega=0100$}
+\begin{itemize}
+    \item $\delta(\{B, E\}, 0) = \delta(B, 0) \cup \delta(E, 0) = \{A\} \cup \{E\} = \{A, E\}$
+    \item $\delta(\{A, E\}, 1) = \{A, C, D\}$
+    \item $\delta(\{A, C, D\}, 0) = \{A, B, D\}$
+    \item $\delta(\{A, B, D\}, 0) = \{A, B, D\}$
+    \item \textbf{Resultado:} $\delta(\{B, E\}, 0100) = \{A, B, D\}$
+\end{itemize}
+
+\textbf{d) $Z=\{B,C,D\}$, $\omega=10100$}
+\begin{itemize}
+    \item $\delta(\{B,C,D\}, 1) = \delta(B, 1) \cup \delta(C, 1) \cup \delta(D, 1) = \{C\} \cup \{D\} \cup \{E\} = \{C, D, E\}$
+    \item $\delta(\{C, D, E\}, 0) = \delta(C, 0) \cup \delta(D, 0) \cup \delta(E, 0) = \{A\} \cup \{D\} \cup \{E\} = \{A, D, E\}$
+    \item $\delta(\{A, D, E\}, 1) = \{A, C, D, E\}$
+    \item $\delta(\{A, C, D, E\}, 0) = \{A, B, D, E\}$
+    \item $\delta(\{A, B, D, E\}, 0) = \{A, B, D, E\}$
+    \item \textbf{Resultado:} $\delta(\{B, C, D\}, 10100) = \{A, B, D, E\}$
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{4. Diagrama del AFD equivalente:}
+
+\begin{center}
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=2cm, on grid, auto, every state/.style={thick, fill=gray!10, minimum size=0.9cm}]
+
+    % Nodos distribuidos ordenadamente para evitar cruces
+    \node[state, initial, initial text={}] (A) at (0,0) {$A$};
+    \node[state] (AB) at (3,0) {$AB$};
+    \node[state, accepting] (AC) at (6,0) {$AC$};
+    \node[state] (AD) at (9,0) {$AD$};
+    \node[state] (ABD) at (6,-3) {$ABD$};
+    \node[state, accepting] (AE) at (9,-3) {$AE$};
+    \node[state, accepting] (ABE) at (3,-6) {$ABE$};
+    \node[state, accepting] (ACE) at (6,-6) {$ACE$};
+    \node[state, accepting] (ACD) at (9,-6) {$ACD$};
+    \node[state, accepting] (ADE) at (12,-6) {$ADE$};
+    \node[state, accepting] (ABDE) at (9,-9) {$ABDE$};
+    \node[state, accepting] (ACDE) at (12,-9) {$ACDE$};
+
+    % Transiciones
+    \path[->]
+    (A) edge [loop above] node {1} (A)
+        edge node {0} (AB)
+    (AB) edge [loop above] node {0} (AB)
+         edge [bend left=15] node {1} (AC)
+    (AC) edge [bend left=15] node {0} (AB)
+         edge node {1} (AD)
+    (AD) edge node [swap] {0} (ABD)
+         edge node {1} (AE)
+    (ABD) edge [loop left] node {0} (ABD)
+          edge node {1} (ACE)
+    (AE) edge [swap] node {0} (ABE)
+         edge node {1} (ACD)
+    (ACE) edge node {0} (ABE)
+          edge node {1} (ACD)
+    (ABE) edge [loop left] node {0} (ABE)
+          edge [bend right=25] node [swap] {1} (ACD)
+    (ACD) edge node [swap] {0} (ABD)
+          edge node {1} (ADE)
+    (ADE) edge node [swap] {0} (ABDE)
+          edge node {1} (ACDE)
+    (ABDE) edge [loop left] node {0} (ABDE)
+           edge [bend left=15] node {1} (ACDE)
+    (ACDE) edge [bend left=15] node {0} (ABDE)
+           edge [loop right] node {1} (ACDE);
+
+\end{tikzpicture}
+}
+\end{center}
+\section*{Expresiones Regulares (Ejercicios 201-235)}
+
+\textbf{Instrucciones:} Indique si las afirmaciones 201-238 son verdaderas (V) o falsas (F) y justifique su respuesta con el razonamiento correspondiente.
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item \textbf{Ejercicio 201 (*):} ¿$a \in L(a+b)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} El operador $+$ denota la unión de conjuntos. El lenguaje generado por la expresión es exactamente $L = \{a, b\}$. Por definición, la cadena $a$ pertenece a este conjunto.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 202 (*):} ¿$a \in L(ab)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} El operador implícito es la concatenación. El lenguaje generado contiene una única cadena de longitud dos: $L = \{ab\}$. La cadena $a$ por sí sola no pertenece al lenguaje.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 203 (*):} ¿$a \in L(a^*+b^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La cerradura de Kleene $a^*$ genera el conjunto $\{\lambda, a, aa, aaa, \dots\}$. Dado que la expresión es una unión ($+$), si $a$ pertenece a $L(a^*)$, entonces pertenece a la unión $L(a^*) \cup L(b^*)$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 204 (*):} ¿$a \in L(ab^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La cerradura de Kleene $b^*$ incluye a la cadena vacía $\lambda$ (cero repeticiones de $b$). Al concatenar la $a$ inicial con $\lambda$, obtenemos $a \cdot \lambda = a$, por lo que la cadena es aceptada.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 205 (*):} ¿$a \in L(a^*b)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} Todas las cadenas generadas por esta expresión regular deben terminar obligatoriamente con el símbolo $b$ (ej. $b, ab, aab$). La cadena $a$ no termina en $b$, por lo que no pertenece.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 206 (*):} ¿$ab \in L(a+b)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La expresión denota la unión de los símbolos unitarios, resultando en $L = \{a, b\}$. Ambas cadenas tienen longitud 1. No es posible generar la cadena $ab$ de longitud 2.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 207 (*):} ¿$ab \in L(ab)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La expresión regular define un lenguaje de una sola cadena mediante concatenación. Esa única cadena es exactamente $ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 208 (*):} ¿$ab \in L(\lambda a^*b)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Concatenar la cadena vacía $\lambda$ al inicio es el elemento neutro de la concatenación. Si la cerradura $a^*$ genera una sola $a$, obtenemos la concatenación $\lambda \cdot a \cdot b = ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 209 (*):} ¿$ab \in L(\emptyset a^*b)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} Por las propiedades formales de los lenguajes, la concatenación de cualquier conjunto con el conjunto vacío $\emptyset$ da como resultado el conjunto vacío $\emptyset$. El lenguaje no contiene cadenas.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 210 (*):} ¿$ab \in L((a+b)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La expresión $(a+b)^*$ representa el lenguaje universal $\Sigma^*$ sobre el alfabeto $\Sigma = \{a, b\}$. Por lo tanto, contiene todas las combinaciones posibles de $a$ y $b$, incluyendo $ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 211 (*):} ¿$ab \in L(abc^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La cerradura de Kleene $c^*$ permite cero repeticiones, lo que genera la cadena vacía $\lambda$. La concatenación resultante es $ab \cdot \lambda = ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 212 (*):} ¿$ab \in L(ab^*c)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La expresión regular exige que, sin importar lo que genere $b^*$, la cadena resultante debe terminar obligatoriamente con el símbolo $c$. La cadena $ab$ termina en $b$, por lo que es inválida.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 213 (*):} ¿$ab \in L(ab^*c^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Si evaluamos $b^*$ con una repetición (genera $b$) y $c^*$ con cero repeticiones (genera $\lambda$), la concatenación es $a \cdot b \cdot \lambda = ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 214 (*):} ¿$ab \in L((a+b+c)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Similar al ejercicio 210, esta expresión genera el lenguaje universal $\Sigma^*$ sobre el alfabeto $\Sigma = \{a, b, c\}$. Cualquier combinación de esos tres símbolos, como $ab$, está incluida.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 215 (*):} ¿$ab \in L((abc)^*)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La cerradura de Kleene aplica sobre el bloque completo "abc". Las únicas cadenas que pertenecen a este lenguaje son repeticiones exactas de ese bloque: $L = \{\lambda, abc, abcabc, \dots\}$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 216 (*):} ¿$ab \in L((ab)^*c)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} Toda cadena generada por esta expresión debe tener el sufijo $c$ obligatoriamente (ej. $c, abc, ababc$). La cadena $ab$ carece de este sufijo.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 217 (*):} ¿$ab \in L(a(bc)^*)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La expresión inicia con $a$ y se concatena con repeticiones del bloque "bc". Las cadenas válidas son $a, abc, abcbc, \dots$. No es posible generar $ab$ sin la $c$ que le sigue.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 218 (*):} ¿$ab \in L(a(b+c)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La expresión inicia obligatoriamente con $a$. El término $(b+c)^*$ permite elegir cualquier combinación de $b$ y $c$. Si elegimos una sola $b$, obtenemos la concatenación $a \cdot b = ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 219 (*):} ¿$ab \in L((a+b)^*c)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} Sin importar qué combinación de $a$ y $b$ se genere en el primer término, la expresión indica que el último símbolo de todas las cadenas debe ser $c$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 220 (*):} ¿$ab \in L((a+b)^*c^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} El primer término $(a+b)^*$ puede generar la cadena $ab$. El segundo término $c^*$ puede generar la cadena vacía $\lambda$. La concatenación final es $ab \cdot \lambda = ab$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 221 (*):} ¿$aa \in L(a+b)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La unión $a+b$ solo genera el conjunto de cadenas de longitud uno: $L = \{a, b\}$. La cadena $aa$ tiene longitud dos.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 222 (*):} ¿$aa \in L(a^*+b^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La cerradura $a^*$ genera cualquier cantidad de $a$'s consecutivas. Al aplicar dos repeticiones obtenemos la cadena $aa$, la cual forma parte de la unión total.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 223 (*):} ¿$aa \in L(a^*b^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Si evaluamos $a^*$ para que genere dos repeticiones ($aa$) y evaluamos $b^*$ para cero repeticiones ($\lambda$), obtenemos la concatenación $aa \cdot \lambda = aa$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 224 (*):} ¿$aa \in L((a+b)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Esta expresión genera todas las combinaciones posibles de $a$ y $b$ de cualquier longitud. La cadena $aa$ es una de esas combinaciones.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 225 (*):} ¿$aa \in L(a(a+b)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La cadena inicia obligatoriamente con el prefijo $a$. Para el sufijo $(a+b)^*$, podemos elegir generar la cadena de longitud uno compuesta por $a$. Concatenando ambas obtenemos $aa$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 226 (*):} ¿$\lambda \in L(a)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} El lenguaje contiene únicamente a la cadena "a". La cadena vacía $\lambda$ (de longitud cero) no pertenece a este lenguaje.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 227 (*):} ¿$\lambda \in L((a+b)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Por definición matemática, la operación de cerradura de Kleene (*) sobre cualquier lenguaje siempre incluye a la cadena vacía $\lambda$ (que representa cero iteraciones).
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 228 (*):} ¿$\lambda \in L((a+b)^*+a)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La expresión es una unión de dos lenguajes. Como se demostró en el ejercicio anterior, $\lambda \in L((a+b)^*)$, por lo que también pertenece a la unión de este con cualquier otro lenguaje.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 229 (*):} ¿$\lambda \in L(\emptyset)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} El símbolo $\emptyset$ representa el conjunto vacío, el cual carece de elementos (tiene cardinalidad 0). Ni siquiera contiene a la cadena vacía $\lambda$ (un conjunto con $\lambda$ tiene cardinalidad 1).
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 230 (*):} ¿$\lambda \in L(\lambda)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La expresión regular define un lenguaje compuesto única y exclusivamente por la cadena vacía $\lambda$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 231 (*):} ¿$\lambda \in L(\lambda+a)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} La expresión genera el lenguaje por unión $L = \{\lambda, a\}$. Es evidente que $\lambda$ es uno de los elementos de dicho conjunto.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 232 (*):} ¿$\lambda \in L(\lambda a)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La concatenación de la cadena vacía $\lambda$ con el símbolo $a$ da como resultado $\lambda \cdot a = a$. El lenguaje solo contiene a la cadena $a$, no a $\lambda$.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 233 (*):} ¿$\lambda \in L(ab^*)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} La concatenación exige que el primer símbolo de cualquier cadena generada sea forzosamente $a$. La cadena vacía no tiene símbolos, por lo que no cumple esta condición estructural.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 234 (*):} ¿$\lambda \in L((ab)^*)$? \\
+    \textbf{Respuesta:} Verdadero (V). \\
+    \textbf{Razonamiento:} Al igual que en el ejercicio 227, toda cerradura de Kleene aplicada sobre una expresión (en este caso el bloque $ab$) incluye siempre a la cadena vacía $\lambda$ correspondiente a cero repeticiones.
+    
+    \vspace{0.2cm}
+    \item \textbf{Ejercicio 235 (*):} ¿$\emptyset \in L(\emptyset)$? \\
+    \textbf{Respuesta:} Falso (F). \\
+    \textbf{Razonamiento:} El símbolo $\emptyset$ representa un conjunto en teoría de lenguajes, no es una cadena ni un símbolo de un alfabeto. Un lenguaje (conjunto de cadenas) no puede contener un conjunto como elemento dentro de este contexto.
+\end{itemize}
+\section*{Diseño de Expresiones Regulares (Ejercicios 236-240)}
+
+\textbf{Instrucciones:} Para cada uno de los lenguajes $L$ dados en 236-240, encuentre una expresión regular cuyo lenguaje sea $L$. En todos los casos, considere el alfabeto $\Sigma=\{0,1\}$.
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item \textbf{Ejercicio 236 (*):} $L = \{x001y : x,y \in \Sigma^*\}$
+    
+    \textbf{Razonamiento:} La notación del conjunto nos indica que todas las cadenas de este lenguaje deben contener la subcadena exacta $001$ en algún lugar. Los prefijos $x$ y los sufijos $y$ pertenecen a la cerradura de Kleene del alfabeto ($\Sigma^*$), lo que significa que pueden ser cualquier combinación de ceros y unos de cualquier longitud (incluyendo la cadena vacía). Sabiendo que $\Sigma = (0+1)$, podemos sustituir directamente.
+    
+    \textbf{Expresión Regular:} $(0+1)^*001(0+1)^*$
+
+    \vspace{0.4cm}
+    
+    \item \textbf{Ejercicio 237 (*):} $L = \{x010 : x \in \Sigma^*\}$
+    
+    \textbf{Razonamiento:} Esta notación indica que el lenguaje está formado por cadenas que terminan obligatoriamente con el sufijo $010$. El prefijo $x$ pertenece a $\Sigma^*$, por lo que antes del sufijo final puede haber cualquier combinación de ceros y unos.
+    
+    \textbf{Expresión Regular:} $(0+1)^*010$
+
+    \vspace{0.4cm}
+    
+    \item \textbf{Ejercicio 238 (*):} $L = \Sigma^3 \cup \Sigma^5$
+    
+    \textbf{Razonamiento:} El exponente sobre el alfabeto indica concatenación estricta de longitud exacta. $\Sigma^3$ es el conjunto de todas las cadenas de longitud exactamente 3. $\Sigma^5$ es el conjunto de todas las cadenas de longitud exactamente 5. La unión ($\cup$) nos dice que la cadena debe cumplir una condición o la otra (operador $+$ en expresiones regulares). Reemplazando $\Sigma$ por $(0+1)$, concatenamos el bloque 3 veces de un lado y 5 veces del otro.
+    
+    \textbf{Expresión Regular:} $(0+1)(0+1)(0+1) + (0+1)(0+1)(0+1)(0+1)(0+1)$
+
+    \vspace{0.4cm}
+    
+    \item \textbf{Ejercicio 239 (*):} $L$ es el lenguaje de las cadenas que comienzan con $01$ o que terminan con $10$.
+    
+    \textbf{Razonamiento:} Aquí tenemos dos casos unidos por un "o" lógico (operador $+$). 
+    \begin{enumerate}
+        \item Cadenas que inician con $01$: El prefijo fijo es $01$ y le sigue cualquier combinación $\Sigma^* \rightarrow 01(0+1)^*$.
+        \item Cadenas que terminan con $10$: Tienen cualquier combinación $\Sigma^*$ al principio y el sufijo fijo $10 \rightarrow (0+1)^*10$.
+    \end{enumerate}
+    Uniendo ambos casos obtenemos la expresión final.
+    
+    \textbf{Expresión Regular:} $01(0+1)^* + (0+1)^*10$
+
+    \vspace{0.4cm}
+    
+    \item \textbf{Ejercicio 240 (*):} $L$ es el lenguaje de las cadenas que tienen longitud par y que contienen la subcadena $01$.
+    
+    \textbf{Razonamiento:} Este es un caso de intersección de dos propiedades. Analicemos cómo puede aparecer la subcadena $01$ (que tiene longitud 2, es decir, par) dentro de una cadena de longitud total par:
+    \begin{enumerate}
+        \item \textbf{Caso 1:} La subcadena $01$ aparece precedida por un número \textit{par} de caracteres. Para que el total sea par, el sufijo que le sigue también debe ser de longitud \textit{par} (Par + 2 + Par = Par). Las longitudes pares se modelan concatenando dos símbolos genéricos en una cerradura: $((0+1)(0+1))^*$.
+        \item \textbf{Caso 2:} La subcadena $01$ aparece precedida por un número \textit{impar} de caracteres. Para que el total sea par, el sufijo obligatoriamente debe ser \textit{impar} (Impar + 2 + Impar = Par). Las longitudes impares se modelan añadiendo un símbolo suelto a una longitud par: $((0+1)(0+1))^*(0+1)$.
+    \end{enumerate}
+    Uniendo ambas posibilidades cubrimos todos los escenarios de longitud par que contienen $01$.
+    
+    \textbf{Expresión Regular:} 
+    
+    $((0+1)(0+1))^* 01 ((0+1)(0+1))^* + ((0+1)(0+1))^*(0+1) 01 (0+1)((0+1)(0+1))^*$
+
+\end{itemize}
+\section*{Obtención de Expresiones Regulares (Ejercicios 254-258)}
+
+\textbf{Instrucciones:} Para cada autómata que se presenta en los reactivos 254-258, encuentre una expresión regular que lo represente.
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item \textbf{Ejercicio 254 (*):}
+    
+    \begin{minipage}{0.4\textwidth}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Estado} & \textbf{0} & \textbf{1} \\
+    \hline
+    $\rightarrow A$ & $A$ & $B$ \\
+    \hline
+    $*B$ & $A$ & $B$ \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+    \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, initial text={}] (A) {$A$};
+        \node[state, accepting, right=of A] (B) {$B$};
+        \path[->]
+        (A) edge [loop above] node {0} (A)
+            edge [bend left=15] node {1} (B)
+        (B) edge [loop above] node {1} (B)
+            edge [bend left=15] node {0} (A);
+    \end{tikzpicture}
+    }
+    \end{minipage}
+
+    \vspace{0.2cm}
+    \textbf{Razonamiento:} El autómata permanece en el estado $A$ mientras lea ceros, y avanza a $B$ con un uno. Estando en $B$ (estado de aceptación), se mantiene ahí leyendo unos, pero regresa a $A$ si lee un cero. Esto significa que cualquier cadena aceptada debe terminar obligatoriamente en el símbolo $1$. La expresión regular que denota todas las combinaciones posibles que terminan en $1$ es $(0+1)^*1$.
+    
+    \textbf{Expresión Regular:} $(0+1)^*1$
+
+    \vspace{0.6cm}
+
+    \item \textbf{Ejercicio 255 (*):}
+    
+    \begin{minipage}{0.4\textwidth}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Estado} & \textbf{0} & \textbf{1} \\
+    \hline
+    $\rightarrow *A$ & $B$ & $B$ \\
+    \hline
+    $B$ & $A$ & $B$ \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+    \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, accepting, initial text={}] (A) {$A$};
+        \node[state, right=of A] (B) {$B$};
+        \path[->]
+        (A) edge [bend left=15] node {0,1} (B)
+        (B) edge [loop above] node {1} (B)
+            edge [bend left=15] node {0} (A);
+    \end{tikzpicture}
+    }
+    \end{minipage}
+
+    \vspace{0.2cm}
+    \textbf{Razonamiento:} El estado inicial $A$ también es de aceptación, por lo que acepta la cadena vacía $\lambda$. Desde $A$ nos movemos a $B$ leyendo cualquier símbolo $(0+1)$. Para regresar de $B$ a $A$ (y ser aceptados), podemos leer cualquier cantidad de unos $(1^*)$ seguidos obligatoriamente de un $0$. Así, un ciclo completo desde $A$ y de regreso a $A$ se representa como $(0+1)1^*0$. Al iterar este ciclo, obtenemos la expresión final.
+    
+    \textbf{Expresión Regular:} $((0+1)1^*0)^*$
+
+    \vspace{0.6cm}
+
+    \item \textbf{Ejercicio 256 (*):}
+    
+    \begin{minipage}{0.4\textwidth}
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Estado} & \textbf{0} & \textbf{1} & \textbf{2} \\
+    \hline
+    $\rightarrow A$ & $B$ & $A$ & $A$ \\
+    \hline
+    $*B$ & $B$ & $B$ & $A$ \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+    \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, initial text={}] (A) {$A$};
+        \node[state, accepting, right=of A] (B) {$B$};
+        \path[->]
+        (A) edge [loop above] node {1,2} (A)
+            edge [bend left=15] node {0} (B)
+        (B) edge [loop above] node {0,1} (B)
+            edge [bend left=15] node {2} (A);
+    \end{tikzpicture}
+    }
+    \end{minipage}
+
+    \vspace{0.2cm}
+    \textbf{Razonamiento:} Desde el estado inicial $A$, los lazos directos son con 1 y 2, es decir $(1+2)^*$. Para transitar hacia el estado de aceptación $B$ requerimos un $0$. Estando en $B$, podemos permanecer ahí con ceros o unos, es decir $(0+1)^*$. Si leemos un $2$, regresamos a $A$, lo que nos obliga a hacer el recorrido de vuelta a $B$ con $(1+2)^*0$. Por tanto, el ciclo completo dentro de $B$ está compuesto por $(0+1)$ o por $2(1+2)^*0$. Concatenando el camino de entrada con los ciclos en $B$, obtenemos la expresión.
+    
+    \textbf{Expresión Regular:} $(1+2)^*0 (0+1 + 2(1+2)^*0)^*$
+
+    \vspace{0.6cm}
+
+    \item \textbf{Ejercicio 257 (*):}
+    
+    \begin{minipage}{0.4\textwidth}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Estado} & \textbf{0} & \textbf{1} \\
+    \hline
+    $\rightarrow A$ & $B$ & $C$ \\
+    \hline
+    $*B$ & $C$ & $B$ \\
+    \hline
+    $*C$ & $A$ & $A$ \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+    \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, initial text={}] (A) {$A$};
+        \node[state, accepting, right=of A] (B) {$B$};
+        \node[state, accepting, below=of B] (C) {$C$};
+        \path[->]
+        (A) edge node {0} (B)
+            edge [bend right=15] node [swap] {1} (C)
+        (B) edge [loop right] node {1} (B)
+            edge node {0} (C)
+        (C) edge [bend left=30] node {0,1} (A);
+    \end{tikzpicture}
+    }
+    \end{minipage}
+
+    \vspace{0.2cm}
+    \textbf{Razonamiento:} Aplicamos ecuaciones de estado sobre los caminos. Los caminos para llegar a $C$ (desde $A$) son: directamente con $1$, o pasando por $B$ con $01^*0$, es decir, $(1+01^*0)$. Desde $C$ se regresa a $A$ con $(0+1)$. Así, el ciclo base en $A$ es $((1+01^*0)(0+1))^*$. Como los estados $B$ y $C$ son de aceptación, debemos agregar los caminos desde $A$ hacia ellos que no regresan. Hacia $B$ es $01^*$ y hacia $C$ es $(1+01^*0)$. Sumando ambos finales, obtenemos la expresión.
+    
+    \textbf{Expresión Regular:} $((1+01^*0)(0+1))^* (01^* + 1 + 01^*0)$
+
+    \vspace{0.6cm}
+
+    \item \textbf{Ejercicio 258 (*):}
+    
+    \begin{minipage}{0.4\textwidth}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Estado} & \textbf{0} & \textbf{1} \\
+    \hline
+    $\rightarrow A$ & $C$ & $C$ \\
+    \hline
+    $B$ & $A$ & $C$ \\
+    \hline
+    $*C$ & $B$ & $A$ \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+    \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, initial text={}] (A) {$A$};
+        \node[state, accepting, right=of A] (C) {$C$};
+        \node[state, below=of A] (B) {$B$};
+        \path[->]
+        (A) edge [bend left=15] node {0,1} (C)
+        (B) edge node {0} (A)
+            edge node [swap] {1} (C)
+        (C) edge [bend left=15] node {1} (A)
+            edge node {0} (B);
+    \end{tikzpicture}
+    }
+    \end{minipage}
+
+    \vspace{0.2cm}
+    \textbf{Razonamiento:} Evaluamos los caminos desde el estado inicial $A$ hacia el estado de aceptación $C$. El camino directo es leyendo $0$ o $1$, es decir $(0+1)$. Estando en $C$, hay tres formas de regresar a $C$:
+    1) $C \xrightarrow{1} A \xrightarrow{0,1} C$ $\rightarrow$ $1(0+1)$
+    2) $C \xrightarrow{0} B \xrightarrow{1} C$ $\rightarrow$ $01$
+    3) $C \xrightarrow{0} B \xrightarrow{0} A \xrightarrow{0,1} C$ $\rightarrow$ $00(0+1)$
+    Sumando los ciclos obtenemos: $1(0+1) + 00(0+1) + 01 = (1+00)(0+1) + 01$. Dado que el autómata inicia con el camino $(0+1)$ y luego itera infinitamente sobre estos ciclos, se genera la expresión final usando la regla de Arden $R = S R^*$.
+    
+    \textbf{Expresión Regular:} $(0+1)((1+00)(0+1) + 01)^*$
+\end{itemize}
+\section*{Equivalencia de autómatas finitos deterministas y no deterministas}
+
+\textbf{Ejercicio 260 (*):} Encuentre un AFD que sea equivalente al siguiente autómata finito no determinista (AFN). Describa a detalle cómo lo obtuvo:
+
+\begin{center}
+\begin{tabular}{c|cc}
+& 0 & 1 \\
+\hline
+$\rightarrow A$ & $\emptyset$ & $\{B,C\}$ \\
+$B$ & $\{A,B,D\}$ & $\{C,D\}$ \\
+$C$ & $\{A,C\}$ & $\{A,E\}$ \\
+$*D$ & $\emptyset$ & $\{D,E\}$ \\
+$E$ & $\{A,E\}$ & $\emptyset$ \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{1. Descripción detallada del procedimiento (Construcción de Subconjuntos):}
+
+Para convertir el AFN a un AFD, utilizamos el algoritmo de construcción de subconjuntos, evaluando las transiciones para cada nuevo conjunto de estados que se vaya formando a partir del estado inicial.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Estado inicial.} El estado inicial del AFD será la cerradura del estado inicial del AFN (como no hay transiciones $\lambda$, es simplemente el conjunto $\{A\}$). Evaluamos sus transiciones:
+    \begin{itemize}
+        \item $\delta(\{A\}, 0) = \emptyset$ (Nuevo estado trampa)
+        \item $\delta(\{A\}, 1) = \{B, C\}$ (Nuevo estado)
+    \end{itemize}
+    
+    \item \textbf{Paso 2: Evaluamos el estado $\emptyset$.} Un conjunto vacío no tiene transiciones salientes a otros estados.
+    \begin{itemize}
+        \item $\delta(\emptyset, 0) = \emptyset$
+        \item $\delta(\emptyset, 1) = \emptyset$
+    \end{itemize}
+
+    \item \textbf{Paso 3: Evaluamos el estado $\{B, C\}$.}
+    \begin{itemize}
+        \item Con 0: $\delta(B, 0) \cup \delta(C, 0) = \{A, B, D\} \cup \{A, C\} = \{A, B, C, D\}$ (Nuevo estado)
+        \item Con 1: $\delta(B, 1) \cup \delta(C, 1) = \{C, D\} \cup \{A, E\} = \{A, C, D, E\}$ (Nuevo estado)
+    \end{itemize}
+
+    \item \textbf{Paso 4: Evaluamos el estado $\{A, B, C, D\}$.}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) \cup \delta(C, 0) \cup \delta(D, 0) = \emptyset \cup \{A, B, D\} \cup \{A, C\} \cup \emptyset = \{A, B, C, D\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) \cup \delta(C, 1) \cup \delta(D, 1) = \{B, C\} \cup \{C, D\} \cup \{A, E\} \cup \{D, E\} = \{A, B, C, D, E\}$ (Nuevo estado)
+    \end{itemize}
+
+    \item \textbf{Paso 5: Evaluamos el estado $\{A, C, D, E\}$.}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(C, 0) \cup \delta(D, 0) \cup \delta(E, 0) = \emptyset \cup \{A, C\} \cup \emptyset \cup \{A, E\} = \{A, C, E\}$ (Nuevo estado)
+        \item Con 1: $\delta(A, 1) \cup \delta(C, 1) \cup \delta(D, 1) \cup \delta(E, 1) = \{B, C\} \cup \{A, E\} \cup \{D, E\} \cup \emptyset = \{A, B, C, D, E\}$
+    \end{itemize}
+
+    \item \textbf{Paso 6: Evaluamos el estado $\{A, B, C, D, E\}$.}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) \cup \delta(C, 0) \cup \delta(D, 0) \cup \delta(E, 0) = \{A, B, C, D\} \cup \{A, E\} = \{A, B, C, D, E\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) \cup \delta(C, 1) \cup \delta(D, 1) \cup \delta(E, 1) = \{A, B, C, D, E\}$
+    \end{itemize}
+
+    \item \textbf{Paso 7: Evaluamos el estado $\{A, C, E\}$.}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(C, 0) \cup \delta(E, 0) = \emptyset \cup \{A, C\} \cup \{A, E\} = \{A, C, E\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(C, 1) \cup \delta(E, 1) = \{B, C\} \cup \{A, E\} \cup \emptyset = \{A, B, C, E\}$ (Nuevo estado)
+    \end{itemize}
+
+    \item \textbf{Paso 8: Evaluamos el estado $\{A, B, C, E\}$.}
+    \begin{itemize}
+        \item Con 0: $\delta(A, 0) \cup \delta(B, 0) \cup \delta(C, 0) \cup \delta(E, 0) = \emptyset \cup \{A, B, D\} \cup \{A, C\} \cup \{A, E\} = \{A, B, C, D, E\}$
+        \item Con 1: $\delta(A, 1) \cup \delta(B, 1) \cup \delta(C, 1) \cup \delta(E, 1) = \{B, C\} \cup \{C, D\} \cup \{A, E\} \cup \emptyset = \{A, B, C, D, E\}$
+    \end{itemize}
+\end{itemize}
+
+\textbf{Definición de estados de aceptación:} En el AFN original, el único estado de aceptación es $D$. Por lo tanto, en nuestro nuevo AFD, cualquier subconjunto que contenga a la letra $D$ será un estado de aceptación.
+
+\vspace{0.5cm}
+
+\textbf{2. Tabla de Transiciones del AFD Final:}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Estado actual} & \textbf{0} & \textbf{1} \\
+\hline
+$\rightarrow \{A\}$ & $\emptyset$ & $\{B, C\}$ \\
+\hline
+$\{B, C\}$ & $\{A, B, C, D\}$ & $\{A, C, D, E\}$ \\
+\hline
+$* \{A, B, C, D\}$ & $\{A, B, C, D\}$ & $\{A, B, C, D, E\}$ \\
+\hline
+$* \{A, C, D, E\}$ & $\{A, C, E\}$ & $\{A, B, C, D, E\}$ \\
+\hline
+$* \{A, B, C, D, E\}$ & $\{A, B, C, D, E\}$ & $\{A, B, C, D, E\}$ \\
+\hline
+$\{A, C, E\}$ & $\{A, C, E\}$ & $\{A, B, C, E\}$ \\
+\hline
+$\{A, B, C, E\}$ & $\{A, B, C, D, E\}$ & $\{A, B, C, D, E\}$ \\
+\hline
+$\emptyset$ & $\emptyset$ & $\emptyset$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{3. Diagrama de Transiciones del AFD:}
+
+\begin{center}
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10, minimum size=1.2cm}]
+
+    % Nodos
+    \node[state, initial, initial text={}] (A) at (0,0) {$A$};
+    \node[state] (E) at (0,-2.5) {$\emptyset$};
+    \node[state] (BC) at (3,0) {$BC$};
+    \node[state, accepting] (ABCD) at (7,1.5) {$ABCD$};
+    \node[state, accepting] (ACDE) at (7,-2.5) {$ACDE$};
+    \node[state, accepting] (ABCDE) at (11,-0.5) {$ABCDE$};
+    \node[state] (ACE) at (7,-6) {$ACE$};
+    \node[state] (ABCE) at (11,-6) {$ABCE$};
+
+    % Transiciones
+    \path[->]
+    (A) edge node [swap] {0} (E)
+        edge node {1} (BC)
+    (BC) edge [bend left=15] node {0} (ABCD)
+         edge [bend right=15] node [swap] {1} (ACDE)
+    (ABCD) edge [loop above] node {0} (ABCD)
+           edge [bend left=15] node {1} (ABCDE)
+    (ACDE) edge node {0} (ACE)
+           edge [bend right=15] node [swap] {1} (ABCDE)
+    (ABCDE) edge [loop right] node {0,1} (ABCDE)
+    (ACE) edge [loop left] node {0} (ACE)
+          edge node {1} (ABCE)
+    (ABCE) edge node [swap] {0,1} (ABCDE)
+    (E) edge [loop below] node {0,1} (E);
+
+\end{tikzpicture}
+}
+\end{center}
+\section*{Construcción de Subconjuntos (Ejercicios 261-263)}
+
+\textbf{Instrucciones:} Para los siguientes ejercicios, determine o diseñe el Autómata Finito Determinista (AFD) equivalente utilizando el método de construcción de subconjuntos.
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item \textbf{Ejercicio 261 (*):} Dado el autómata finito no determinista (AFN) mostrado en la figura, determine el autómata finito determinista (AFD) equivalente.
+    
+    \textbf{1. Análisis del AFN original:} \\
+    Identificamos la tabla de transiciones del AFN. El alfabeto es $\Sigma=\{0, 1\}$. El estado inicial es $q_0$ y el estado de aceptación es $q_2$.
+    \begin{itemize}
+        \item $\delta(q_0, 0) = \{q_0, q_1\}$, $\delta(q_0, 1) = \{q_0, q_3\}$
+        \item $\delta(q_1, 0) = \{q_2\}$, $\delta(q_1, 1) = \emptyset$
+        \item $\delta(q_2, 0) = \emptyset$, $\delta(q_2, 1) = \emptyset$
+        \item $\delta(q_3, 0) = \emptyset$, $\delta(q_3, 1) = \{q_4\}$
+        \item $\delta(q_4, 0) = \emptyset$, $\delta(q_4, 1) = \emptyset$
+    \end{itemize}
+
+    \textbf{2. Construcción de subconjuntos:}
+    \begin{itemize}
+        \item $A = \{q_0\}$ (Estado inicial)
+        \item $\delta(A, 0) = \{q_0, q_1\} = B$
+        \item $\delta(A, 1) = \{q_0, q_3\} = C$
+        \item $\delta(B, 0) = \delta(q_0, 0) \cup \delta(q_1, 0) = \{q_0, q_1, q_2\} = D$ \textit{(Estado de aceptación)}
+        \item $\delta(B, 1) = \delta(q_0, 1) \cup \delta(q_1, 1) = \{q_0, q_3\} \cup \emptyset = \{q_0, q_3\} = C$
+        \item $\delta(C, 0) = \delta(q_0, 0) \cup \delta(q_3, 0) = \{q_0, q_1\} \cup \emptyset = \{q_0, q_1\} = B$
+        \item $\delta(C, 1) = \delta(q_0, 1) \cup \delta(q_3, 1) = \{q_0, q_3\} \cup \{q_4\} = \{q_0, q_3, q_4\} = E$
+        \item $\delta(D, 0) = \delta(q_0, 0) \cup \delta(q_1, 0) \cup \delta(q_2, 0) = \{q_0, q_1, q_2\} = D$
+        \item $\delta(D, 1) = \delta(q_0, 1) \cup \delta(q_1, 1) \cup \delta(q_2, 1) = \{q_0, q_3\} = C$
+        \item $\delta(E, 0) = \delta(q_0, 0) \cup \delta(q_3, 0) \cup \delta(q_4, 0) = \{q_0, q_1\} = B$
+        \item $\delta(E, 1) = \delta(q_0, 1) \cup \delta(q_3, 1) \cup \delta(q_4, 1) = \{q_0, q_3, q_4\} = E$
+    \end{itemize}
+
+    \textbf{3. Diagrama del AFD resultante:}
+    \begin{center}
+    \resizebox{0.7\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2.5cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, initial text={}] (A) {$A$};
+        \node[state, right=of A] (B) {$B$};
+        \node[state, below=of A] (C) {$C$};
+        \node[state, accepting, right=of B] (D) {$D$};
+        \node[state, below=of C] (E) {$E$};
+
+        \path[->]
+        (A) edge node {0} (B)
+            edge node [swap] {1} (C)
+        (B) edge node {0} (D)
+            edge [bend left=15] node {1} (C)
+        (C) edge [bend left=15] node {0} (B)
+            edge node [swap] {1} (E)
+        (D) edge [loop right] node {0} (D)
+            edge node [swap] {1} (C)
+        (E) edge [bend right=30] node [swap] {0} (B)
+            edge [loop right] node {1} (E);
+    \end{tikzpicture}
+    }
+    \end{center}
+
+    \vspace{0.6cm}
+
+    \item \textbf{Ejercicio 262 (*):} Diseñe un AFN que acepte el conjunto $\{ab, ba\}$ y utilícelo para encontrar un AFD que lo acepte.
+
+    \textbf{1. Diseño del AFN original:} \\
+    El lenguaje exige aceptar únicamente dos cadenas: $ab$ y $ba$. Diseñamos un AFN partiendo del estado $q_0$ con dos ramas.
+    \begin{itemize}
+        \item Rama 1: $\delta(q_0, a) = \{q_1\}$, $\delta(q_1, b) = \{q_f\}$
+        \item Rama 2: $\delta(q_0, b) = \{q_2\}$, $\delta(q_2, a) = \{q_f\}$
+    \end{itemize}
+
+    \textbf{2. Construcción de subconjuntos:}
+    \begin{itemize}
+        \item $A = \{q_0\}$ (Estado inicial)
+        \item $\delta(A, a) = \{q_1\} = B$
+        \item $\delta(A, b) = \{q_2\} = C$
+        \item $\delta(B, a) = \emptyset$ \textit{(Estado trampa E)}
+        \item $\delta(B, b) = \{q_f\} = D$ \textit{(Estado de aceptación)}
+        \item $\delta(C, a) = \{q_f\} = D$
+        \item $\delta(C, b) = \emptyset$
+        \item $\delta(D, a) = \emptyset$, $\delta(D, b) = \emptyset$
+        \item $\delta(\emptyset, a) = \emptyset$, $\delta(\emptyset, b) = \emptyset$
+    \end{itemize}
+
+    \textbf{3. Diagramas (AFN y AFD equivalente):}
+    \begin{center}
+    \resizebox{\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=2cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        % AFN
+        \node[state, initial, initial text={AFN:}] (q0) {$q_0$};
+        \node[state, above right=of q0] (q1) {$q_1$};
+        \node[state, below right=of q0] (q2) {$q_2$};
+        \node[state, accepting, below right=of q1] (qf) {$q_f$};
+
+        \path[->]
+        (q0) edge node {$a$} (q1)
+             edge node [swap] {$b$} (q2)
+        (q1) edge node {$b$} (qf)
+        (q2) edge node [swap] {$a$} (qf);
+
+        % AFD
+        \node[state, initial, initial text={AFD:}] (A) at (7,0) {$A$};
+        \node[state] (B) at (9, 1.5) {$B$};
+        \node[state] (C) at (9, -1.5) {$C$};
+        \node[state, accepting] (D) at (11, 0) {$D$};
+        \node[state] (E) at (11, -3) {$\emptyset$};
+
+        \path[->]
+        (A) edge node {$a$} (B)
+            edge node [swap] {$b$} (C)
+        (B) edge node {$b$} (D)
+            edge [bend left=15] node {$a$} (E)
+        (C) edge node [swap] {$a$} (D)
+            edge node [swap] {$b$} (E)
+        (D) edge node {$a,b$} (E)
+        (E) edge [loop right] node {$a,b$} (E);
+    \end{tikzpicture}
+    }
+    \end{center}
+
+    \vspace{0.6cm}
+
+    \item \textbf{Ejercicio 263 (*):} Dado el autómata finito no determinista (AFN) mostrado en la figura, determine el autómata finito determinista (AFD) equivalente.
+
+    \textbf{1. Análisis del AFN original:} \\
+    Este AFN reconoce el lenguaje de todas las cadenas que terminan en $01$.
+    \begin{itemize}
+        \item $\delta(q_0, 0) = \{q_0, q_1\}$, $\delta(q_0, 1) = \{q_0\}$
+        \item $\delta(q_1, 0) = \emptyset$, $\delta(q_1, 1) = \{q_2\}$
+        \item $\delta(q_2, 0) = \emptyset$, $\delta(q_2, 1) = \emptyset$
+    \end{itemize}
+
+    \textbf{2. Construcción de subconjuntos:}
+    \begin{itemize}
+        \item $A = \{q_0\}$ (Estado inicial)
+        \item $\delta(A, 0) = \{q_0, q_1\} = B$
+        \item $\delta(A, 1) = \{q_0\} = A$
+        \item $\delta(B, 0) = \delta(q_0, 0) \cup \delta(q_1, 0) = \{q_0, q_1\} = B$
+        \item $\delta(B, 1) = \delta(q_0, 1) \cup \delta(q_1, 1) = \{q_0, q_2\} = C$ \textit{(Estado de aceptación)}
+        \item $\delta(C, 0) = \delta(q_0, 0) \cup \delta(q_2, 0) = \{q_0, q_1\} = B$
+        \item $\delta(C, 1) = \delta(q_0, 1) \cup \delta(q_2, 1) = \{q_0\} = A$
+    \end{itemize}
+
+    \textbf{3. Diagrama del AFD resultante:}
+    \begin{center}
+    \resizebox{0.6\linewidth}{!}{
+    \begin{tikzpicture}[>=Stealth, node distance=3cm, on grid, auto, every state/.style={thick, fill=gray!10}]
+        \node[state, initial, initial text={}] (A) {$A$};
+        \node[state, right=of A] (B) {$B$};
+        \node[state, accepting, right=of B] (C) {$C$};
+
+        \path[->]
+        (A) edge [loop above] node {1} (A)
+            edge [bend left=15] node {0} (B)
+        (B) edge [loop above] node {0} (B)
+            edge [bend left=15] node {1} (C)
+        (C) edge [bend left=25] node {0} (B)
+            edge [bend left=30] node {1} (A);
+    \end{tikzpicture}
+    }
+    \end{center}
+
+\end{itemize}
+
+\end{document}
